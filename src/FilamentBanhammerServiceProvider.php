@@ -2,9 +2,9 @@
 
 namespace Gerenuk\FilamentBanhammer;
 
+use Gerenuk\FilamentBanhammer\Commands\FilamentBanhammerCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Gerenuk\FilamentBanhammer\Commands\FilamentBanhammerCommand;
 
 class FilamentBanhammerServiceProvider extends PackageServiceProvider
 {
