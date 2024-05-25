@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Gerenuk\FilamentBanhammer\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class FilamentBanhammerCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'filament-banhammer';
 
     public $description = 'My command';
 

@@ -1,17 +1,19 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "gerenuk-ltd/filament-banhammer",
+    "description": "This is my package filament-banhammer",
     "keywords": [
-        ":vendor_name",
+        "Gerenuk",
         "laravel",
-        ":package_slug"
+        "filament",
+        "banhammer",
+        "filament-banhammer"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/gerenuk-ltd/filament-banhammer",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Kieran Proctor",
+            "email": "kieran.lee.proctor@gmail.com",
             "role": "Developer"
         }
     ],
@@ -35,19 +37,19 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Gerenuk\\FilamentBanhammer\\": "src/",
+            "Gerenuk\\FilamentBanhammer\\Database\\Factories\\": "database/factories/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/",
+            "Gerenuk\\FilamentBanhammer\\Tests\\": "tests/",
             "Workbench\\App\\": "workbench/app/"
         }
     },
     "scripts": {
         "post-autoload-dump": "@composer run prepare",
-        "clear": "@php vendor/bin/testbench package:purge-skeleton --ansi",
+        "clear": "@php vendor/bin/testbench package:purge-filament-banhammer --ansi",
         "prepare": "@php vendor/bin/testbench package:discover --ansi",
         "build": [
             "@composer run prepare",
@@ -73,10 +75,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Gerenuk\\FilamentBanhammer\\FilamentBanhammerServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "FilamentBanhammer": "Gerenuk\\FilamentBanhammer\\Facades\\FilamentBanhammer"
             }
         }
     },
