@@ -2,6 +2,7 @@
 
 namespace Gerenuk\FilamentBanhammer;
 
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Gerenuk\FilamentBanhammer\Commands\FilamentBanhammerCommand;
@@ -19,6 +20,12 @@ class FilamentBanhammerServiceProvider extends PackageServiceProvider
             ->name('filament-banhammer')
             ->hasConfigFile()
             ->hasViews()
-            ->hasCommand(FilamentBanhammerCommand::class);
+            ->hasInstallCommand(function (InstallCommand $command) {
+                $command
+                    ->publishConfigFile()
+                    ->publishMigrations()
+                    ->askToRunMigrations()
+                    ->askToStarRepoOnGitHub('gerenuk-ltd/filament-banhammer');
+            });
     }
 }
