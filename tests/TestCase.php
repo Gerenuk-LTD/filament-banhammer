@@ -2,9 +2,9 @@
 
 namespace Gerenuk\FilamentBanhammer\Tests;
 
+use Gerenuk\FilamentBanhammer\FilamentBanhammerServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Gerenuk\FilamentBanhammer\FilamentBanhammerServiceProvider;
 
 class TestCase extends Orchestra
 {
