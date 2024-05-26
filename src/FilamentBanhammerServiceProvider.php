@@ -18,12 +18,8 @@ class FilamentBanhammerServiceProvider extends PackageServiceProvider
         $package
             ->name('filament-banhammer')
             ->hasConfigFile()
-            ->hasViews()
             ->hasInstallCommand(function (InstallCommand $command) {
                 $command
-                    ->publishConfigFile()
-                    ->publishMigrations()
-                    ->askToRunMigrations()
                     ->askToStarRepoOnGitHub('gerenuk-ltd/filament-banhammer');
             });
     }

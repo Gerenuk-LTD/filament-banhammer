@@ -27,8 +27,7 @@ class FilamentBanhammerPlugin implements Plugin
     {
         $panel
             ->resources([
-            ])
-            ->pages([
+                config('filament-banhammer.resource'),
             ]);
     }
 
