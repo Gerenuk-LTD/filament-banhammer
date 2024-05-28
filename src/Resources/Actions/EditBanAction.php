@@ -44,12 +44,12 @@ class EditBanAction extends Action
         });
 
         $this->action(function (): void {
-            $result = $this->process(static fn(array $data, Model $record) => $record->update([
+            $result = $this->process(static fn (array $data, Model $record) => $record->update([
                 'comment' => $data['comment'],
-                'expired_at' => $data['expired_at']
+                'expired_at' => $data['expired_at'],
             ]));
 
-            if (!config('filament-banhammer.actions.edit_ban.notifications.show')) {
+            if (! config('filament-banhammer.actions.edit_ban.notifications.show')) {
                 return;
             }
 
@@ -57,7 +57,7 @@ class EditBanAction extends Action
 
             $this->successNotificationTitle(config('filament-banhammer.actions.edit_ban.notifications.success.title'));
 
-            if (!$result) {
+            if (! $result) {
                 $this->failure();
 
                 return;
@@ -67,8 +67,7 @@ class EditBanAction extends Action
         });
     }
 
-    public
-    function getFormSchema(): array
+    public function getFormSchema(): array
     {
         return [
             Section::make()

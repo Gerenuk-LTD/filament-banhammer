@@ -39,12 +39,12 @@ class BanAction extends Action
         });
 
         $this->action(function (): void {
-            $result = $this->process(static fn(array $data, Model $record) => $record->ban([
+            $result = $this->process(static fn (array $data, Model $record) => $record->ban([
                 'comment' => $data['comment'],
-                'expired_at' => $data['expired_at']
+                'expired_at' => $data['expired_at'],
             ]));
 
-            if (!config('filament-banhammer.actions.ban.notifications.show')) {
+            if (! config('filament-banhammer.actions.ban.notifications.show')) {
                 return;
             }
 
@@ -52,7 +52,7 @@ class BanAction extends Action
 
             $this->successNotificationTitle(config('filament-banhammer.actions.ban.notifications.success.title'));
 
-            if (!$result) {
+            if (! $result) {
                 $this->failure();
 
                 return;
