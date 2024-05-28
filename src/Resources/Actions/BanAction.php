@@ -34,9 +34,7 @@ class BanAction extends Action
 
         $this->requiresConfirmation(config('filament-banhammer.actions.ban.require_confirmation'));
 
-        $this->form(function (Model $record) {
-            return $this->getFormSchema();
-        });
+        $this->form($this->getFormSchema());
 
         $this->action(function (): void {
             $result = $this->process(static fn (array $data, Model $record) => $record->ban([

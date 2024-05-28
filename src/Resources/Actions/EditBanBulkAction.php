@@ -32,9 +32,7 @@ class EditBanBulkAction extends BulkAction
 
         $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban_bulk.require_confirmation'));
 
-        $this->form(function () {
-            return $this->getFormSchema();
-        });
+        $this->form($this->getFormSchema());
 
         $this->action(function (): void {
             $this->process(static fn (array $data, Collection $records) => $records->each(fn (Model $record) => $record->update([

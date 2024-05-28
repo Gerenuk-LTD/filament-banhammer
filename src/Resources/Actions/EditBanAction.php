@@ -32,9 +32,7 @@ class EditBanAction extends Action
 
         $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban.require_confirmation'));
 
-        $this->form(function () {
-            return $this->getFormSchema();
-        });
+        $this->form($this->getFormSchema());
 
         $this->mountUsing(function (ComponentContainer $form, Model $record): void {
             $form->fill([
