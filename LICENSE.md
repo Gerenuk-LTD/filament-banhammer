@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) Gerenuk <kieran.lee.proctor@gmail.com>
+Copyright (c) Gerenuk <info@geren.uk>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
