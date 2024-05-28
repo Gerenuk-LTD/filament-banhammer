@@ -1,9 +1,9 @@
 # Filament Banhammer
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/gerenuk-ltd/filament-banhammer.svg?style=flat-square)](https://packagist.org/packages/gerenuk-ltd/filament-banhammer)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/gerenuk/filament-banhammer.svg?style=flat-square)](https://packagist.org/packages/gerenuk-ltd/filament-banhammer)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/gerenuk-ltd/filament-banhammer/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/gerenuk-ltd/filament-banhammer/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/gerenuk-ltd/filament-banhammer/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/gerenuk-ltd/filament-banhammer/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/gerenuk-ltd/filament-banhammer.svg?style=flat-square)](https://packagist.org/packages/gerenuk-ltd/filament-banhammer)
+[![Total Downloads](https://img.shields.io/packagist/dt/gerenuk/filament-banhammer.svg?style=flat-square)](https://packagist.org/packages/gerenuk-ltd/filament-banhammer)
 
 This package uses [mchev/banhammer](https://github.com/mchev/banhammer) to add model banning functionality to filament.
 

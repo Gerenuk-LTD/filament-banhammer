@@ -1,6 +1,6 @@
 {
     "name": "gerenuk/filament-banhammer",
-    "description": "This package add model banning functionality to filament",
+    "description": "This package adds model banning functionality to filament",
     "keywords": [
         "Gerenuk",
         "laravel",
