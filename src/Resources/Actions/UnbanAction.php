@@ -28,6 +28,8 @@ class UnbanAction extends Action
 
         $this->modalHeading(config('filament-banhammer.actions.unban.label'));
 
+        $this->modalSubmitActionLabel('Confirm');
+
         $this->requiresConfirmation(config('filament-banhammer.actions.unban.require_confirmation'));
 
         $this->action(function (): void {

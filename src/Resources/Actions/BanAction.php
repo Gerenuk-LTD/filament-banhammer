@@ -30,6 +30,8 @@ class BanAction extends Action
 
         $this->modalHeading(config('filament-banhammer.actions.ban.label'));
 
+        $this->modalSubmitActionLabel('Confirm');
+
         $this->requiresConfirmation(config('filament-banhammer.actions.ban.require_confirmation'));
 
         $this->form(function (Model $record) {
