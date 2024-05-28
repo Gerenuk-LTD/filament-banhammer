@@ -14,6 +14,7 @@ use Gerenuk\FilamentBanhammer\Resources\Actions\EditBanBulkAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanBulkAction;
 use Gerenuk\FilamentBanhammer\Resources\BanhammerResource\Pages;
+use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class BanhammerResource extends Resource
 {
