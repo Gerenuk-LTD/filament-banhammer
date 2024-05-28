@@ -35,9 +35,7 @@ class BanBulkAction extends BulkAction
 
         $this->requiresConfirmation(config('filament-banhammer.actions.ban_bulk.require_confirmation'));
 
-        $this->form(function (Model $record) {
-            return $this->getFormSchema();
-        });
+        $this->form($this->getFormSchema());
 
         $this->action(function (): void {
             $this->process(static fn (Collection $records) => $records->each(fn (Model $record) => $record->ban()));
