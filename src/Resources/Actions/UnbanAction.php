@@ -4,7 +4,6 @@ namespace Gerenuk\FilamentBanhammer\Resources\Actions;
 
 use Filament\Actions\Action;
 use Filament\Actions\Concerns\CanCustomizeProcess;
-use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 
 class UnbanAction extends Action
@@ -31,7 +30,7 @@ class UnbanAction extends Action
         $this->requiresConfirmation(config('filament-banhammer.actions.unban.require_confirmation'));
 
         $this->action(function (): void {
-            $result = $this->process(static fn(array $data, Model $record) => $record->unban());
+            $result = $this->process(static fn (array $data, Model $record) => $record->unban());
 
             if (! config('filament-banhammer.actions.unban.notifications.show')) {
                 return;
@@ -41,7 +40,7 @@ class UnbanAction extends Action
 
             $this->successNotificationTitle(config('filament-banhammer.actions.unban.notifications.success.title'));
 
-            if (!$result) {
+            if (! $result) {
                 $this->failure();
 
                 return;

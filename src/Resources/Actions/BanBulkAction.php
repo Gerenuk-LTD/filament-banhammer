@@ -38,9 +38,9 @@ class BanBulkAction extends BulkAction
         });
 
         $this->action(function (): void {
-            $this->process(static fn(Collection $records) => $records->each(fn(Model $record) => $record->ban()));
+            $this->process(static fn (Collection $records) => $records->each(fn (Model $record) => $record->ban()));
 
-            if (!config('filament-banhammer.actions.ban_bulk.notifications.show')) {
+            if (! config('filament-banhammer.actions.ban_bulk.notifications.show')) {
                 return;
             }
 
