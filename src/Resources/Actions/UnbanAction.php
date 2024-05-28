@@ -20,23 +20,27 @@ class UnbanAction extends Action
     {
         parent::setUp();
 
-        $this->successNotificationTitle(config('filament-banhammer.actions.unban.title'));
+        $this->label(config('filament-banhammer.actions.unban.label'));
 
         $this->color(config('filament-banhammer.actions.unban.colour'));
 
         $this->icon(config('filament-banhammer.actions.unban.icon'));
 
-        $this->requiresConfirmation(config('filament-banhammer.actions.unban.confirm'));
+        $this->requiresConfirmation(config('filament-banhammer.actions.unban.require_confirmation'));
 
         $this->action(function (): void {
             $this->process(function (array $data, Model $record, Table $table) {
-                $result = $record->unban();
+                $record->unban();
 
-                if (! config('filament-banhammer.actions.unban.notification.show')) {
+                if (! config('filament-banhammer.actions.unban.notifications.show')) {
                     return;
                 }
 
-                if (! $result) {
+                $this->failureNotificationTitle(config('filament-banhammer.actions.unban.notifications.error.title'));
+
+                $this->successNotificationTitle(config('filament-banhammer.actions.unban.notifications.success.title'));
+
+                if ($record->isBanned()) {
                     $this->failure();
 
                     return;

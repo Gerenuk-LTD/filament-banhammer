@@ -2,13 +2,17 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources;
 
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Actions\BulkActionGroup;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Gerenuk\FilamentBanhammer\Resources\Actions\EditBanAction;
+use Gerenuk\FilamentBanhammer\Resources\Actions\EditBanBulkAction;
+use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanAction;
+use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanBulkAction;
 use Gerenuk\FilamentBanhammer\Resources\BanhammerResource\Pages;
 
 class BanhammerResource extends Resource
@@ -24,28 +28,7 @@ class BanhammerResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Section::make('Fields')
-                    ->schema([
-                        TextInput::make('comment')
-                            ->nullable()
-                            ->columnSpanFull(),
-                        DateTimePicker::make('expired_at')
-                            ->label('Expires at')
-                            ->nullable()
-                            ->columnSpanFull(),
-                    ])
-                    ->columns()
-                    ->columnSpan(3)
-                    ->collapsible(),
-                Section::make('Meta')
-                    ->schema([
-                        // TOOD: add meta ability.
-                    ])
-                    ->columns()
-                    ->columnSpan(2)
-                    ->collapsible(),
-            ])->columns(5);
+            ->schema([]);
     }
 
     public static function table(Table $table): Table
@@ -54,11 +37,15 @@ class BanhammerResource extends Resource
             ->columns([
                 TextColumn::make('id')
                     ->toggleable(isToggledHiddenByDefault: true),
-                //                TextColumn::make('bannable_type')
-                //                    ->label('Type'), // Only banning users for now
-                TextColumn::make('bannable.name')
+                TextColumn::make('bannable_type')
+                    ->label('Type')
+                    ->toggleable(),
+                TextColumn::make('bannable')
                     ->label('Name')
-                    ->searchable(),
+                    ->searchable()
+                    ->formatStateUsing(function ($record) {
+                        return $record->bannable->getFilamentBanhammerTitleAttribute() ?? '-';
+                    }),
                 TextColumn::make('ip')
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -76,7 +63,8 @@ class BanhammerResource extends Resource
                     ->toggleable(),
                 TextColumn::make('created_at')
                     ->dateTime()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Banned at')
+                    ->toggleable(),
                 TextColumn::make('updated_at')
                     ->dateTime()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -88,40 +76,16 @@ class BanhammerResource extends Resource
             ])
             ->actions([
                 ActionGroup::make([
-                    EditAction::make(),
-                    Action::make('unban')
-                        ->requiresConfirmation()
-                        ->action(function (Model $record): void {
-                            $record->bannable->unban();
-
-                            Notification::make()
-                                ->success()
-                                ->title('Unbanned')
-                                ->send();
-                        })
-                        ->color('warning')
-                        ->icon('heroicon-o-no-symbol'),
+                    EditBanAction::make(),
+                    UnbanAction::make(),
                 ])->tooltip('Actions'),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
-                    ExportBulkAction::make(),
-                    BulkAction::make('unban')
-                        ->requiresConfirmation()
-                        ->action(function (Collection $records): void {
-                            foreach ($records as $record) {
-                                $record->bannable->unban();
-                            }
-
-                            Notification::make()
-                                ->success()
-                                ->title('Unbanned')
-                                ->send();
-                        })
-                        ->deselectRecordsAfterCompletion()
-                        ->color('warning')
-                        ->icon('heroicon-o-no-symbol'),
-                    DeleteBulkAction::make(),
+                    ExportBulkAction::make()
+                        ->visible(config('filament-banhammer.show_export')),
+                    EditBanBulkAction::make(),
+                    UnbanBulkAction::make(),
                 ]),
             ]);
     }
@@ -130,7 +94,6 @@ class BanhammerResource extends Resource
     {
         return [
             'index' => Pages\ListBanhammers::route('/'),
-            'edit' => Pages\EditBanhammer::route('/{record}/edit'),
         ];
     }
 

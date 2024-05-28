@@ -3,53 +3,58 @@
 namespace Gerenuk\FilamentBanhammer\Resources\Actions;
 
 use Filament\Actions\Action;
-use Filament\Actions\Concerns\CanCustomizeProcess;
+use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Database\Eloquent\Model;
 
-class BanAction extends Action
+class EditBanAction extends Action
 {
-    use CanCustomizeProcess;
-
     public static function getDefaultName(): ?string
     {
-        return 'ban';
+        return 'edit_ban';
     }
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->label(config('filament-banhammer.actions.ban.label'));
+        $this->label(config('filament-banhammer.actions.edit_ban.label'));
 
-        $this->color(config('filament-banhammer.actions.ban.colour'));
+        $this->color(config('filament-banhammer.actions.edit_ban.colour'));
 
-        $this->icon(config('filament-banhammer.actions.ban.icon'));
+        $this->icon(config('filament-banhammer.actions.edit_ban.icon'));
 
-        $this->requiresConfirmation(config('filament-banhammer.actions.ban.require_confirmation'));
+        $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban.require_confirmation'));
 
-        $this->form(function (Model $record) {
+        $this->form(function () {
             return $this->getFormSchema();
+        });
+
+        $this->mountUsing(function (ComponentContainer $form, Model $record): void {
+            $form->fill([
+                'comment' => $record->comment,
+                'expired_at' => $record->expired_at,
+            ]);
         });
 
         $this->action(function (): void {
             $this->process(function (array $data, Model $record) {
-                $record->ban([
+                $result = $record->update([
                     'comment' => $data['comment'],
                     'expired_at' => $data['expired_at'],
                 ]);
 
-                if (! config('filament-banhammer.actions.ban.notifications.show')) {
+                if (! config('filament-banhammer.actions.edit_ban.notifications.show')) {
                     return;
                 }
 
-                $this->failureNotificationTitle(config('filament-banhammer.actions.ban.notifications.error.title'));
+                $this->failureNotificationTitle(config('filament-banhammer.actions.edit_ban.notifications.error.title'));
 
-                $this->successNotificationTitle(config('filament-banhammer.actions.ban.notifications.success.title'));
+                $this->successNotificationTitle(config('filament-banhammer.actions.edit_ban.notifications.success.title'));
 
-                if (! $record->isBanned()) {
+                if (! $result) {
                     $this->failure();
 
                     return;

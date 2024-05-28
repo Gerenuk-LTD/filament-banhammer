@@ -4,6 +4,7 @@ namespace Gerenuk\FilamentBanhammer\Resources\Actions;
 
 use Filament\Actions\Concerns\CanCustomizeProcess;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\BulkAction;
 use Illuminate\Database\Eloquent\Collection;
@@ -22,13 +23,13 @@ class BanBulkAction extends BulkAction
     {
         parent::setUp();
 
-        $this->successNotificationTitle(config('filament-banhammer.actions.ban_bulk.title'));
+        $this->label(config('filament-banhammer.actions.ban_bulk.label'));
 
         $this->color(config('filament-banhammer.actions.ban_bulk.colour'));
 
         $this->icon(config('filament-banhammer.actions.ban_bulk.icon'));
 
-        $this->requiresConfirmation(config('filament-banhammer.actions.ban_bulk.confirm'));
+        $this->requiresConfirmation(config('filament-banhammer.actions.ban_bulk.require_confirmation'));
 
         $this->form(function (Model $record) {
             return $this->getFormSchema();
@@ -36,16 +37,23 @@ class BanBulkAction extends BulkAction
 
         $this->action(function (): void {
             $this->process(function (array $data, Collection $records): void {
-                $result = $records->filter(fn ($r) => ! $r->banned_at)->each->ban([
-                    'comment' => $data['comment'],
-                    'expired_at' => $data['expired_at'],
-                ]);
+                $results = [];
+                foreach ($records->filter(fn ($r) => ! $r->banned_at) as $record) {
+                    $results[] = $record->ban([
+                        'comment' => $data['comment'],
+                        'expired_at' => $data['expired_at'],
+                    ]);
+                }
 
-                if (! config('filament-banhammer.actions.ban_bulk.notification.show')) {
+                if (! config('filament-banhammer.actions.ban_bulk.notifications.show')) {
                     return;
                 }
 
-                if (! $result) {
+                $this->failureNotificationTitle(config('filament-banhammer.actions.ban_bulk.notifications.error.title'));
+
+                $this->successNotificationTitle(config('filament-banhammer.actions.ban_bulk.notifications.success.title'));
+
+                if (empty($results) || in_array(false, $results, true)) {
                     $this->failure();
 
                     return;
@@ -61,10 +69,13 @@ class BanBulkAction extends BulkAction
     public function getFormSchema(): array
     {
         return [
-            TextInput::make('comment')
-                ->nullable(),
-            DateTimePicker::make('expired_at')
-                ->label('Expires at'),
+            Section::make()
+                ->schema([
+                    TextInput::make('comment')
+                        ->nullable(),
+                    DateTimePicker::make('expired_at')
+                        ->label('Expires at'),
+                ]),
         ];
     }
 }

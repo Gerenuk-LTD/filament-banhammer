@@ -1,6 +1,6 @@
 {
-    "name": "gerenuk-ltd/filament-banhammer",
-    "description": "This is my package filament-banhammer",
+    "name": "gerenuk/filament-banhammer",
+    "description": "This package add model banning functionality to filament",
     "keywords": [
         "Gerenuk",
         "laravel",
@@ -39,8 +39,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Gerenuk\\FilamentBanhammer\\": "src/",
-            "Gerenuk\\FilamentBanhammer\\Database\\Factories\\": "database/factories/"
+            "Gerenuk\\FilamentBanhammer\\": "src/"
         }
     },
     "autoload-dev": {
@@ -78,10 +77,7 @@
         "laravel": {
             "providers": [
                 "Gerenuk\\FilamentBanhammer\\FilamentBanhammerServiceProvider"
-            ],
-            "aliases": {
-                "FilamentBanhammer": "Gerenuk\\FilamentBanhammer\\Facades\\FilamentBanhammer"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",

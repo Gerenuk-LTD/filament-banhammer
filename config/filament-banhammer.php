@@ -8,9 +8,9 @@ return [
     'resource' => \Gerenuk\FilamentBanhammer\Resources\BanhammerResource::class,
 
     /*
-     * Whether a banner should be shown on resources which have been banned.
+     * Whether an export action should be included on the resource.
      */
-    'show_banner' => true,
+    'show_export' => true,
 
     /*
      * Options for the actions.
@@ -25,7 +25,7 @@ return [
             /*
              * The title of the ban action.
              */
-            'title' => 'ban',
+            'label' => 'ban',
 
             /*
              * The colour of the ban action.
@@ -45,7 +45,7 @@ return [
             /*
              * Notification options for the ban action.
              */
-            'notification' => [
+            'notifications' => [
 
                 /*
                  * Whether a notification should be shown for the ban action.
@@ -53,9 +53,91 @@ return [
                 'show' => true,
 
                 /*
-                 * The title of the notification for the ban action.
+                 * Success options for the ban action notifications.
                  */
-                'title' => 'Banned',
+                'success' => [
+
+                    /*
+                    * The title of the success notification for the ban action.
+                    */
+                    'title' => 'Banned',
+
+                ],
+
+                /*
+                 * Error options for the ban action notifications.
+                 */
+                'error' => [
+
+                    /*
+                    * The title of the error notification for the ban action.
+                    */
+                    'title' => 'Failed',
+
+                ],
+
+            ],
+
+        ],
+
+        /*
+         * Options for the edit ban action.
+         */
+        'edit_ban' => [
+
+            /*
+             * The title of the edit ban action.
+             */
+            'label' => 'edit ban',
+
+            /*
+             * The colour of the edit ban action.
+             */
+            'colour' => 'warning',
+
+            /*
+             * The symbol of the edit ban action.
+             */
+            'icon' => 'heroicon-o-pencil-square',
+
+            /*
+             * Whether confirming is required when using the edit ban action.
+             */
+            'require_confirmation' => true,
+
+            /*
+             * Notification options for the edit ban action.
+             */
+            'notifications' => [
+
+                /*
+                 * Whether a notification should be shown for the edit ban action.
+                 */
+                'show' => true,
+
+                /*
+                 * Success options for the edit ban action notifications.
+                 */
+                'success' => [
+
+                    /*
+                    * The title of the success notification for the edit ban action.
+                    */
+                    'title' => 'Saved',
+
+                ],
+
+                /*
+                 * Error options for the edit ban action notifications.
+                 */
+                'error' => [
+
+                    /*
+                    * The title of the error notification for the edit ban action.
+                    */
+                    'title' => 'Failed',
+
+                ],
 
             ],
 
@@ -69,7 +151,7 @@ return [
             /*
              * The title of the unban action.
              */
-            'title' => 'unban',
+            'label' => 'unban',
 
             /*
              * The colour of the unban action.
@@ -89,7 +171,7 @@ return [
             /*
              * Notification options for the unban action.
              */
-            'notification' => [
+            'notifications' => [
 
                 /*
                  * Whether a notification should be shown for the unban action.
@@ -97,9 +179,28 @@ return [
                 'show' => true,
 
                 /*
-                 * The title of the notification for the unban action.
+                 * Success options for the unban action notifications.
                  */
-                'title' => 'Unbanned',
+                'success' => [
+
+                    /*
+                    * The title of the success notification for the unban action.
+                    */
+                    'title' => 'Unbanned',
+
+                ],
+
+                /*
+                 * Error options for the unban action notifications.
+                 */
+                'error' => [
+
+                    /*
+                    * The title of the error notification for the unban action.
+                    */
+                    'title' => 'Failed',
+
+                ],
 
             ],
 
@@ -113,7 +214,7 @@ return [
             /*
              * The title of the ban bulk action.
              */
-            'title' => 'ban',
+            'label' => 'ban',
 
             /*
              * The colour of the ban bulk action.
@@ -133,7 +234,7 @@ return [
             /*
              * Notification options for the ban bulk action.
              */
-            'notification' => [
+            'notifications' => [
 
                 /*
                  * Whether a notification should be shown for the ban bulk action.
@@ -141,9 +242,91 @@ return [
                 'show' => true,
 
                 /*
-                 * The title of the notification for the ban bulk action.
+                 * Success options for the ban bulk action notifications.
                  */
-                'title' => 'Banned',
+                'success' => [
+
+                    /*
+                    * The title of the success notification for the ban bulk action.
+                    */
+                    'title' => 'Banned',
+
+                ],
+
+                /*
+                 * Error options for the ban bulk action notifications.
+                 */
+                'error' => [
+
+                    /*
+                    * The title of the error notification for the ban bulk action.
+                    */
+                    'title' => 'Failures',
+
+                ],
+
+            ],
+
+        ],
+
+        /*
+         * Options for the edit ban bulk action.
+         */
+        'edit_ban_bulk' => [
+
+            /*
+             * The title of the edit ban bulk action.
+             */
+            'label' => 'edit ban',
+
+            /*
+             * The colour of the edit ban bulk action.
+             */
+            'colour' => 'warning',
+
+            /*
+             * The symbol of the edit ban bulk action.
+             */
+            'icon' => 'heroicon-o-pencil-square',
+
+            /*
+             * Whether confirming is required when using the edit ban bulk action.
+             */
+            'require_confirmation' => true,
+
+            /*
+             * Notification options for the edit ban bulk action.
+             */
+            'notifications' => [
+
+                /*
+                 * Whether a notification should be shown for the edit ban bulk action.
+                 */
+                'show' => true,
+
+                /*
+                 * Success options for the edit ban bulk action notifications.
+                 */
+                'success' => [
+
+                    /*
+                    * The title of the success notification for the edit ban bulk action.
+                    */
+                    'title' => 'Saved',
+
+                ],
+
+                /*
+                 * Error options for the edit ban bulk action notifications.
+                 */
+                'error' => [
+
+                    /*
+                    * The title of the error notification for the edit ban bulk action.
+                    */
+                    'title' => 'Failures',
+
+                ],
 
             ],
 
@@ -157,7 +340,7 @@ return [
             /*
              * The title of the unban bulk action.
              */
-            'title' => 'unban',
+            'label' => 'unban',
 
             /*
              * The colour of the unban bulk action.
@@ -177,7 +360,7 @@ return [
             /*
              * Notification options for the unban bulk action.
              */
-            'notification' => [
+            'notifications' => [
 
                 /*
                  * Whether a notification should be shown for the unban bulk action.
@@ -185,9 +368,28 @@ return [
                 'show' => true,
 
                 /*
-                 * The title of the notification for the unban bulk action.
+                 * Success options for the unban bulk action notifications.
                  */
-                'title' => 'Unbanned',
+                'success' => [
+
+                    /*
+                    * The title of the success notification for the unban bulk action.
+                    */
+                    'title' => 'Unbanned',
+
+                ],
+
+                /*
+                 * Error options for the unban bulk action notifications.
+                 */
+                'error' => [
+
+                    /*
+                    * The title of the error notification for the unban bulk action.
+                    */
+                    'title' => 'Failures',
+
+                ],
 
             ],
 
