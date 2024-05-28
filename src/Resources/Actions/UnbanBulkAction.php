@@ -33,7 +33,7 @@ class UnbanBulkAction extends BulkAction
         $this->requiresConfirmation(config('filament-banhammer.actions.unban_bulk.require_confirmation'));
 
         $this->action(function (): void {
-            $this->process(static fn (Collection $records) => $records->each(fn (Model $record) => $record->unban()));
+            $this->process(static fn (Collection $records) => $records->each(fn (Model $record) => $record->bannable->unban()));
 
             if (! config('filament-banhammer.actions.unban_bulk.notifications.show')) {
                 return;
