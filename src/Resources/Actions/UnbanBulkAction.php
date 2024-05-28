@@ -28,6 +28,8 @@ class UnbanBulkAction extends BulkAction
 
         $this->modalHeading(config('filament-banhammer.actions.unban_bulk.label'));
 
+        $this->modalSubmitActionLabel('Confirm');
+
         $this->requiresConfirmation(config('filament-banhammer.actions.unban_bulk.require_confirmation'));
 
         $this->action(function (): void {

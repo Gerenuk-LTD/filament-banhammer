@@ -28,6 +28,8 @@ class EditBanAction extends Action
 
         $this->modalHeading(config('filament-banhammer.actions.edit_ban.label'));
 
+        $this->modalSubmitActionLabel('Confirm');
+
         $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban.require_confirmation'));
 
         $this->form(function () {

@@ -28,6 +28,8 @@ class EditBanBulkAction extends BulkAction
 
         $this->modalHeading(config('filament-banhammer.actions.edit_ban_bulk.label'));
 
+        $this->modalSubmitActionLabel('Confirm');
+
         $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban_bulk.require_confirmation'));
 
         $this->form(function () {
