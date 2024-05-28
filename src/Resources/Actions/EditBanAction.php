@@ -26,6 +26,8 @@ class EditBanAction extends Action
 
         $this->icon(config('filament-banhammer.actions.edit_ban.icon'));
 
+        $this->modalHeading(config('filament-banhammer.actions.edit_ban.label'));
+
         $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban.require_confirmation'));
 
         $this->form(function () {
@@ -40,28 +42,26 @@ class EditBanAction extends Action
         });
 
         $this->action(function (): void {
-            $this->process(function (array $data, Model $record) {
-                $result = $record->update([
-                    'comment' => $data['comment'],
-                    'expired_at' => $data['expired_at'],
-                ]);
+            $result = $this->process(static fn (array $data, Model $record) => $record->update([
+                'comment' => $data['comment'],
+                'expired_at' => $data['expired_at'],
+            ]));
 
-                if (! config('filament-banhammer.actions.edit_ban.notifications.show')) {
-                    return;
-                }
+            if (! config('filament-banhammer.actions.edit_ban.notifications.show')) {
+                return;
+            }
 
-                $this->failureNotificationTitle(config('filament-banhammer.actions.edit_ban.notifications.error.title'));
+            $this->failureNotificationTitle(config('filament-banhammer.actions.edit_ban.notifications.error.title'));
 
-                $this->successNotificationTitle(config('filament-banhammer.actions.edit_ban.notifications.success.title'));
+            $this->successNotificationTitle(config('filament-banhammer.actions.edit_ban.notifications.success.title'));
 
-                if (! $result) {
-                    $this->failure();
+            if (! $result) {
+                $this->failure();
 
-                    return;
-                }
+                return;
+            }
 
-                $this->success();
-            });
+            $this->success();
         });
     }
 

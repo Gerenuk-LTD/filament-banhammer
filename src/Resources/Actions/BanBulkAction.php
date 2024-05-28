@@ -29,6 +29,8 @@ class BanBulkAction extends BulkAction
 
         $this->icon(config('filament-banhammer.actions.ban_bulk.icon'));
 
+        $this->modalHeading(config('filament-banhammer.actions.ban_bulk.label'));
+
         $this->requiresConfirmation(config('filament-banhammer.actions.ban_bulk.require_confirmation'));
 
         $this->form(function (Model $record) {
@@ -36,31 +38,17 @@ class BanBulkAction extends BulkAction
         });
 
         $this->action(function (): void {
-            $this->process(function (array $data, Collection $records): void {
-                $results = [];
-                foreach ($records->filter(fn ($r) => ! $r->banned_at) as $record) {
-                    $results[] = $record->ban([
-                        'comment' => $data['comment'],
-                        'expired_at' => $data['expired_at'],
-                    ]);
-                }
+            $this->process(static fn (Collection $records) => $records->each(fn (Model $record) => $record->ban()));
 
-                if (! config('filament-banhammer.actions.ban_bulk.notifications.show')) {
-                    return;
-                }
+            if (! config('filament-banhammer.actions.ban_bulk.notifications.show')) {
+                return;
+            }
 
-                $this->failureNotificationTitle(config('filament-banhammer.actions.ban_bulk.notifications.error.title'));
+            $this->failureNotificationTitle(config('filament-banhammer.actions.ban_bulk.notifications.error.title'));
 
-                $this->successNotificationTitle(config('filament-banhammer.actions.ban_bulk.notifications.success.title'));
+            $this->successNotificationTitle(config('filament-banhammer.actions.ban_bulk.notifications.success.title'));
 
-                if (empty($results) || in_array(false, $results, true)) {
-                    $this->failure();
-
-                    return;
-                }
-
-                $this->success();
-            });
+            $this->success();
         });
 
         $this->deselectRecordsAfterCompletion();

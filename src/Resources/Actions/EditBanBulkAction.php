@@ -7,6 +7,7 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\BulkAction;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class EditBanBulkAction extends BulkAction
 {
@@ -25,6 +26,8 @@ class EditBanBulkAction extends BulkAction
 
         $this->icon(config('filament-banhammer.actions.edit_ban_bulk.icon'));
 
+        $this->modalHeading(config('filament-banhammer.actions.edit_ban_bulk.label'));
+
         $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban_bulk.require_confirmation'));
 
         $this->form(function () {
@@ -32,29 +35,20 @@ class EditBanBulkAction extends BulkAction
         });
 
         $this->action(function (): void {
-            $this->process(function (array $data, Collection $records) {
-                $results = [];
-                $results[] = $records->each->update([
-                    'comment' => $data['comment'],
-                    'expired_at' => $data['expired_at'],
-                ]);
+            $this->process(static fn (array $data, Collection $records) => $records->each(fn (Model $record) => $record->update([
+                'comment' => $data['comment'],
+                'expired_at' => $data['expired_at'],
+            ])));
 
-                if (! config('filament-banhammer.actions.edit_ban_bulk.notifications.show')) {
-                    return;
-                }
+            if (! config('filament-banhammer.actions.edit_ban_bulk.notifications.show')) {
+                return;
+            }
 
-                $this->failureNotificationTitle(config('filament-banhammer.actions.edit_ban_bulk.notifications.error.title'));
+            $this->failureNotificationTitle(config('filament-banhammer.actions.edit_ban_bulk.notifications.error.title'));
 
-                $this->successNotificationTitle(config('filament-banhammer.actions.edit_ban_bulk.notifications.success.title'));
+            $this->successNotificationTitle(config('filament-banhammer.actions.edit_ban_bulk.notifications.success.title'));
 
-                if (empty($results) || in_array(false, $results, true)) {
-                    $this->failure();
-
-                    return;
-                }
-
-                $this->success();
-            });
+            $this->success();
         });
     }
 
