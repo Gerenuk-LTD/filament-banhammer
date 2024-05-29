@@ -9,6 +9,8 @@ This package uses [mchev/banhammer](https://github.com/mchev/banhammer) to add m
 
 ## Installation
 
+This package depends on [mchev/banhammer](https://github.com/mchev/banhammer) please follow the install guide there first.
+
 You can install the package via composer:
 
 ```bash
@@ -458,7 +460,81 @@ public function getFilamentBanhammerTitleAttribute()
     return $this->name;
 }
 ```
-> This specifies the property to display in the bans resource
+> This specifies the property to display in the bans resource.
+
+To be able to ban a resource simply add the `Ban` action:
+
+```php
+use Filament\Tables\Table;
+use Gerenuk\FilamentBanhammer\Resources\Actions\BanAction;
+
+public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ...
+            ])
+            ->actions([
+                BanAction::make(),
+            ]);
+    }
+```
+
+To be able to unban a resource simply add the `Unban` action:
+
+```php
+use Filament\Tables\Table;
+use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanAction;
+
+public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ...
+            ])
+            ->actions([
+                UnbanAction::make(),
+            ]);
+    }
+```
+> A ban resource is included by default if you would prefer to use that instead.
+
+To be able to bulk ban a resource simply add the `BanBulk` action:
+
+```php
+use Filament\Tables\Table;
+use Gerenuk\FilamentBanhammer\Resources\Actions\BanBulkAction;
+
+public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ...
+            ])
+            ->bulkActions([
+                BanBulkAction::make(),
+            ]);
+    }
+```
+
+To be able to bulk unban a resource simply add the `UnbanBulk` action:
+
+```php
+use Filament\Tables\Table;
+use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanBulkAction;
+
+public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                ...
+            ])
+            ->bulkActions([
+                UnbanBulkAction::make(),
+            ]);
+    }
+```
+> A ban resource is included by default if you would prefer to use that instead.
 
 ## Testing
 

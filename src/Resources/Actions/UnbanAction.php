@@ -32,7 +32,11 @@ class UnbanAction extends Action
         $this->requiresConfirmation(config('filament-banhammer.actions.unban.require_confirmation'));
 
         $this->action(function (): void {
-            $result = $this->process(static fn (array $data, Model $record) => $record->bannable->unban());
+            $result = $this->process(static function (array $data, Model $record) {
+                $record->bannable->unban();
+
+                return $record->isBanned();
+            });
 
             if (! config('filament-banhammer.actions.unban.notifications.show')) {
                 return;
