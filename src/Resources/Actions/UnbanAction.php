@@ -33,9 +33,11 @@ class UnbanAction extends Action
 
         $this->action(function (): void {
             $result = $this->process(static function (array $data, Model $record) {
-                $record->bannable->unban();
+                $banned = $record->bannable;
 
-                return $record->isBanned();
+                $banned->unban();
+
+                return $banned->isBanned();
             });
 
             if (! config('filament-banhammer.actions.unban.notifications.show')) {
