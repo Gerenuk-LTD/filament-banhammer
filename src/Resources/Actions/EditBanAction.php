@@ -2,6 +2,7 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources\Actions;
 
+use Filament\Actions\Concerns\CanCustomizeProcess;
 use Filament\Forms\ComponentContainer;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EditBanAction extends Action
 {
+    use CanCustomizeProcess;
+
     public static function getDefaultName(): ?string
     {
         return 'edit_ban';
@@ -34,12 +37,16 @@ class EditBanAction extends Action
 
         $this->form($this->getFormSchema());
 
-        $this->mountUsing(function (ComponentContainer $form, Model $record): void {
-            $form->fill([
-                'comment' => $record->comment,
-                'expired_at' => $record->expired_at,
-            ]);
+        $this->fillForm(function (Model $record): array {
+            return $record->attributesToArray();
         });
+        //
+        //        $this->mountUsing(function (ComponentContainer $form, Model $record): void {
+        //            $form->fill([
+        //                'comment' => $record->comment,
+        //                'expired_at' => $record->expired_at,
+        //            ]);
+        //        });
 
         $this->action(function (): void {
             $result = $this->process(static fn (array $data, Model $record) => $record->update([

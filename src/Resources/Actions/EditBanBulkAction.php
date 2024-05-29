@@ -2,6 +2,7 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources\Actions;
 
+use Filament\Actions\Concerns\CanCustomizeProcess;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
@@ -11,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EditBanBulkAction extends BulkAction
 {
+    use CanCustomizeProcess;
+
     public static function getDefaultName(): ?string
     {
         return 'edit_ban_bulk';
