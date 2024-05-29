@@ -472,7 +472,7 @@ public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                ...
+                // ...
             ])
             ->actions([
                 BanAction::make(),
@@ -490,7 +490,7 @@ public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                ...
+                // ...
             ])
             ->actions([
                 UnbanAction::make(),
@@ -509,7 +509,7 @@ public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                ...
+                // ...
             ])
             ->bulkActions([
                 BanBulkAction::make(),
@@ -527,7 +527,7 @@ public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                ...
+                // ...
             ])
             ->bulkActions([
                 UnbanBulkAction::make(),
