@@ -32,13 +32,7 @@ class UnbanAction extends Action
         $this->requiresConfirmation(config('filament-banhammer.actions.unban.require_confirmation'));
 
         $this->action(function (): void {
-            $result = $this->process(static function (array $data, Model $record) {
-                $banned = $record->bannable;
-
-                $banned->unban();
-
-                return $banned->isBanned();
-            });
+            $result = $this->process(static fn (Model $record) => $record->bannable->unban());
 
             if (! config('filament-banhammer.actions.unban.notifications.show')) {
                 return;
@@ -48,11 +42,11 @@ class UnbanAction extends Action
 
             $this->successNotificationTitle(config('filament-banhammer.actions.unban.notifications.success.title'));
 
-            if (! $result) {
-                $this->failure();
-
-                return;
-            }
+//            if (! $result) {
+//                $this->failure();
+//
+//                return;
+//            }
 
             $this->success();
         });
