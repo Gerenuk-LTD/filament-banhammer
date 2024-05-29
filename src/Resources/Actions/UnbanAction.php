@@ -42,11 +42,11 @@ class UnbanAction extends Action
 
             $this->successNotificationTitle(config('filament-banhammer.actions.unban.notifications.success.title'));
 
-//            if (! $result) {
-//                $this->failure();
-//
-//                return;
-//            }
+            //            if (! $result) {
+            //                $this->failure();
+            //
+            //                return;
+            //            }
 
             $this->success();
         });
