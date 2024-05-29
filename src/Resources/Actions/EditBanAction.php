@@ -40,13 +40,13 @@ class EditBanAction extends Action
         $this->fillForm(function (Model $record): array {
             return $record->attributesToArray();
         });
-//
-//        $this->mountUsing(function (ComponentContainer $form, Model $record): void {
-//            $form->fill([
-//                'comment' => $record->comment,
-//                'expired_at' => $record->expired_at,
-//            ]);
-//        });
+        //
+        //        $this->mountUsing(function (ComponentContainer $form, Model $record): void {
+        //            $form->fill([
+        //                'comment' => $record->comment,
+        //                'expired_at' => $record->expired_at,
+        //            ]);
+        //        });
 
         $this->action(function (): void {
             $result = $this->process(static fn (array $data, Model $record) => $record->update([
