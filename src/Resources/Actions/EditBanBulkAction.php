@@ -37,10 +37,6 @@ class EditBanBulkAction extends BulkAction
 
         $this->form($this->getFormSchema());
 
-        $this->fillForm(function (Model $record): array {
-            return $record->attributesToArray();
-        });
-
         $this->action(function (): void {
             $this->process(static fn (array $data, Collection $records) => $records->each(fn (Model $record) => $record->update([
                 'comment' => $data['comment'],
