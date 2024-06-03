@@ -485,7 +485,6 @@ class AdminPanelProvider extends PanelProvider
     }
 }
 ```
-
 For each model you have added the `use Banhammer` trait to, you will also need to add the following method:
 
 ```php
@@ -494,7 +493,8 @@ public function getFilamentBanhammerTitleAttribute()
     return $this->name;
 }
 ```
-> This specifies the property to display in the bans resource.
+> [!IMPORTANT]
+> This specifies the property to be displayed in the bans resource.
 
 ### Ban
 
