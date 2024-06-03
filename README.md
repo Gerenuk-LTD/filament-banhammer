@@ -1,11 +1,45 @@
+<img src="https://banners.beyondco.de/Filament%20Banhammer.png?theme=light&packageManager=composer+require&packageName=gerenuk%2Ffilament-banhammer&pattern=brickWall&style=style_1&description=Ban+resources+in+your+Filament+project&md=1&showWatermark=0&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg" alt="Project banner">
+
 # Filament Banhammer
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/gerenuk/filament-banhammer.svg?style=flat-square)](https://packagist.org/packages/gerenuk/filament-banhammer)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/gerenuk-ltd/filament-banhammer/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/gerenuk-ltd/filament-banhammer/actions?query=workflow%3Arun-tests+branch%3Amain)
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/gerenuk-ltd/filament-banhammer/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/gerenuk-ltd/filament-banhammer/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/gerenuk/filament-banhammer.svg?style=flat-square)](https://packagist.org/packages/gerenuk/filament-banhammer)
+[![Licence](https://img.shields.io/github/license/Gerenuk-LTD/filament-banhammer?color=blue&label=license&style=flat-square)](https://github.com/Gerenuk-LTD/filament-banhammer/blob/main/LICENSE.md)
 
 This package uses [mchev/banhammer](https://github.com/mchev/banhammer) to add model banning functionality to filament.
+
+## Table of Contents
+1. [Introduction](#filament-banhammer)
+2. [Version Compatibility](#version-compatibility)
+3. [Usage](#usage)
+    - [Registering the Plugin](#usage)
+    - [Ban](#ban)
+    - [Unban](#unban)
+    - [Ban Bulk](#ban-bulk)
+    - [Unban Bulk](#unban-bulk)
+4. [Testing](#testing)
+5. [Screenshots](#screenshots)
+    - [Resource](#resource)
+    - [Ban Action](#ban-action)
+    - [Ban Bulk Action](#ban-bulk-action)
+    - [Ban Modal](#ban-modal)
+    - [Unban Action](#unban)
+    - [Unban Bulk Action](#unban-bulk)
+    - [Unban Modal](#unban-modal)
+6. [Changelog](#changelog)
+7. [Contributing](#contributing)
+8. [Security Vulnerabilities](#security-vulnerabilities)
+9. [Credits](#credits)
+10. [License](#license)
+
+## Version Compatibility
+
+| Plugin | Filament | Laravel | PHP      |
+| ---------- | ---------- | ---------- |----------|
+| 1.x | 3.x | 10.x | 8.x      |
+| 1.x | 3.x | 11.x | 8.2\|8.3 |
 
 ## Installation
 
@@ -451,7 +485,6 @@ class AdminPanelProvider extends PanelProvider
     }
 }
 ```
-
 For each model you have added the `use Banhammer` trait to, you will also need to add the following method:
 
 ```php
@@ -460,7 +493,10 @@ public function getFilamentBanhammerTitleAttribute()
     return $this->name;
 }
 ```
-> This specifies the property to display in the bans resource.
+> [!IMPORTANT]
+> This specifies which property to be displayed in the bans resource.
+
+### Ban
 
 To be able to ban a resource simply add the `Ban` action:
 
@@ -479,6 +515,13 @@ public static function table(Table $table): Table
             ]);
     }
 ```
+
+<details>
+    <summary>Click for screenshot</summary>
+    ![Ban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-action.png)
+</details>
+
+### Unban
 
 To be able to unban a resource simply add the `Unban` action:
 
@@ -499,6 +542,13 @@ public static function table(Table $table): Table
 ```
 > A ban resource is included by default if you would prefer to use that instead.
 
+<details>
+    <summary>Click for screenshot</summary>
+    ![Unban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-action.png)
+</details>
+
+### Ban Bulk
+
 To be able to bulk ban a resource simply add the `BanBulk` action:
 
 ```php
@@ -516,6 +566,13 @@ public static function table(Table $table): Table
             ]);
     }
 ```
+
+<details>
+    <summary>Click for screenshot</summary>
+    ![Ban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-bulk-action.png)
+</details>
+
+### Unban Bulk
 
 To be able to bulk unban a resource simply add the `UnbanBulk` action:
 
@@ -536,11 +593,46 @@ public static function table(Table $table): Table
 ```
 > A ban resource is included by default if you would prefer to use that instead.
 
+<details>
+    <summary>Click for screenshot</summary>
+    ![Unban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-bulk-action.png)
+</details>
+
 ## Testing
 
 ```bash
 composer test
 ```
+
+## Screenshots
+
+### Resource
+
+![Ban Resource](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-resource.png)
+
+### Ban Action
+
+![Ban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-action.png)
+
+### Ban Bulk Action
+
+![Ban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-bulk-action.png)
+
+### Ban Modal
+
+![Ban Modal](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-modal.png)
+
+### Unban Action
+
+![Unban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-action.png)
+
+### Unban Bulk Action
+
+![Unban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-bulk-action.png)
+
+### Unban Modal
+
+![Unban Modal](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-modal.png)
 
 ## Changelog
 
