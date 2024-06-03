@@ -2,6 +2,15 @@
 
 All notable changes to `filament-banhammer` will be documented in this file.
 
+## v1.1.0 - 2024-06-03
+
+### What's Changed
+
+* Dev by @KieranLProctor in https://github.com/Gerenuk-LTD/filament-banhammer/pull/17
+* Dev by @KieranLProctor in https://github.com/Gerenuk-LTD/filament-banhammer/pull/18
+
+**Full Changelog**: https://github.com/Gerenuk-LTD/filament-banhammer/compare/v1.0.1...v1.1.0
+
 ## v1.0.1 - 2024-05-28
 
 ### What's Changed
