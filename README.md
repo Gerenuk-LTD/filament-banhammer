@@ -1,4 +1,4 @@
-<img src="https://banners.beyondco.de/Filament%20Banhammer.png?theme=light&packageManager=composer+require&packageName=gerenuk%2Ffilament-banhammer&pattern=brickWall&style=style_1&description=Ban+resources+in+your+Filament+project&md=1&showWatermark=0&fontSize=100px&images=https%3A%2F%2Flaravel.com%2Fimg%2Flogomark.min.svg" alt="Project banner">
+<img src="https://banners.beyondco.de/Filament%20Banhammer.png?theme=light&packageManager=composer+require&packageName=gerenuk%2Ffilament-banhammer&pattern=brickWall&style=style_1&description=Ban+resources+in+your+Filament+project&md=1&showWatermark=0&fontSize=100px&images=ban" alt="Project banner">
 
 # Filament Banhammer
 
