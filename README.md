@@ -494,7 +494,7 @@ public function getFilamentBanhammerTitleAttribute()
 }
 ```
 > [!IMPORTANT]
-> This specifies the property to be displayed in the bans resource.
+> This specifies which property to be displayed in the bans resource.
 
 ### Ban
 
