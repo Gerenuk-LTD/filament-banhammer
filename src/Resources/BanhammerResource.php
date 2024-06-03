@@ -2,7 +2,7 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources;
 
-use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\ActionGroup;
@@ -71,10 +71,10 @@ class BanhammerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                DateTimePicker::make('expired_at'),
-                DateTimePicker::make('created_at')
+                DatePicker::make('expired_at'),
+                DatePicker::make('created_at')
                     ->label('Banned at'),
-                DateTimePicker::make('updated_at'),
+                DatePicker::make('updated_at'),
             ])
             ->actions([
                 ActionGroup::make([
