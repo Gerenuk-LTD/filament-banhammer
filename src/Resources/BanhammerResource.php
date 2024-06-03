@@ -9,12 +9,14 @@ use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\BulkActionGroup;
 use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Gerenuk\FilamentBanhammer\Resources\Actions\EditBanAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\EditBanBulkAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanBulkAction;
 use Gerenuk\FilamentBanhammer\Resources\BanhammerResource\Pages;
+use Illuminate\Database\Eloquent\Builder;
 
 class BanhammerResource extends Resource
 {
@@ -71,10 +73,24 @@ class BanhammerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                DatePicker::make('expired_at'),
-                DatePicker::make('created_at')
-                    ->label('Banned at'),
-                DatePicker::make('updated_at'),
+                Filter::make('expired_at')
+                    ->form([
+                        DatePicker::make('unbanned_at')
+                    ])
+                ->query(function (Builder $query, array $data) {
+                    return $query
+                        ->when($data['unbanned_at'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('expired_at', '=', $date));
+                }),
+                Filter::make('created_at')
+                    ->form([
+                        DatePicker::make('banned_at')
+                    ])
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['banned_at'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '=', $date));
+                    }),
             ])
             ->actions([
                 ActionGroup::make([
