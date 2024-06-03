@@ -10,6 +10,13 @@
 
 This package uses [mchev/banhammer](https://github.com/mchev/banhammer) to add model banning functionality to filament.
 
+## Version Compatibility
+
+| Plugin | Filament | Laravel | PHP      |
+| ---------- | ---------- | ---------- |----------|
+| 1.x | 3.x | 10.x | 8.x      |
+| 1.x | 3.x | 11.x | 8.2\|8.3 |
+
 ## Installation
 
 This package depends on [mchev/banhammer](https://github.com/mchev/banhammer) please follow the install guide there first.
