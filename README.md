@@ -516,11 +516,6 @@ public static function table(Table $table): Table
     }
 ```
 
-<details>
-    <summary>Click for screenshot</summary>
-    ![Ban Action](screenshots/ban-action.png)
-</details>
-
 ### Unban
 
 To be able to unban a resource simply add the `Unban` action:
@@ -542,11 +537,6 @@ public static function table(Table $table): Table
 ```
 > A ban resource is included by default if you would prefer to use that instead.
 
-<details>
-    <summary>Click for screenshot</summary>
-    ![Unban Action](screenshots/unban-action.png)
-</details>
-
 ### Ban Bulk
 
 To be able to bulk ban a resource simply add the `BanBulk` action:
@@ -566,11 +556,6 @@ public static function table(Table $table): Table
             ]);
     }
 ```
-
-<details>
-    <summary>Click for screenshot</summary>
-    ![Ban Bulk Action](screenshots/ban-bulk-action.png)
-</details>
 
 ### Unban Bulk
 
@@ -592,11 +577,6 @@ public static function table(Table $table): Table
     }
 ```
 > A ban resource is included by default if you would prefer to use that instead.
-
-<details>
-    <summary>Click for screenshot</summary>
-    ![Unban Bulk Action](screenshots/unban-bulk-action.png)
-</details>
 
 ## Testing
 
