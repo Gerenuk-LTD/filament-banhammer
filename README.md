@@ -13,14 +13,15 @@ This package uses [mchev/banhammer](https://github.com/mchev/banhammer) to add m
 ## Table of Contents
 1. [Introduction](#filament-banhammer)
 2. [Version Compatibility](#version-compatibility)
-3. [Usage](#usage)
+3. [Installation](#installation)
+4. [Usage](#usage)
     - [Registering the Plugin](#usage)
     - [Ban](#ban)
     - [Unban](#unban)
     - [Ban Bulk](#ban-bulk)
     - [Unban Bulk](#unban-bulk)
-4. [Testing](#testing)
-5. [Screenshots](#screenshots)
+5. [Testing](#testing)
+6. [Screenshots](#screenshots)
     - [Resource](#resource)
     - [Ban Action](#ban-action)
     - [Ban Bulk Action](#ban-bulk-action)
@@ -28,11 +29,11 @@ This package uses [mchev/banhammer](https://github.com/mchev/banhammer) to add m
     - [Unban Action](#unban)
     - [Unban Bulk Action](#unban-bulk)
     - [Unban Modal](#unban-modal)
-6. [Changelog](#changelog)
-7. [Contributing](#contributing)
-8. [Security Vulnerabilities](#security-vulnerabilities)
-9. [Credits](#credits)
-10. [License](#license)
+7. [Changelog](#changelog)
+8. [Contributing](#contributing)
+9. [Security Vulnerabilities](#security-vulnerabilities)
+10. [Credits](#credits)
+11. [License](#license)
 
 ## Version Compatibility
 
@@ -516,11 +517,6 @@ public static function table(Table $table): Table
     }
 ```
 
-<details>
-    <summary>Click for screenshot</summary>
-    ![Ban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-action.png)
-</details>
-
 ### Unban
 
 To be able to unban a resource simply add the `Unban` action:
@@ -542,11 +538,6 @@ public static function table(Table $table): Table
 ```
 > A ban resource is included by default if you would prefer to use that instead.
 
-<details>
-    <summary>Click for screenshot</summary>
-    ![Unban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-action.png)
-</details>
-
 ### Ban Bulk
 
 To be able to bulk ban a resource simply add the `BanBulk` action:
@@ -566,11 +557,6 @@ public static function table(Table $table): Table
             ]);
     }
 ```
-
-<details>
-    <summary>Click for screenshot</summary>
-    ![Ban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-bulk-action.png)
-</details>
 
 ### Unban Bulk
 
@@ -593,11 +579,6 @@ public static function table(Table $table): Table
 ```
 > A ban resource is included by default if you would prefer to use that instead.
 
-<details>
-    <summary>Click for screenshot</summary>
-    ![Unban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-bulk-action.png)
-</details>
-
 ## Testing
 
 ```bash
@@ -608,31 +589,31 @@ composer test
 
 ### Resource
 
-![Ban Resource](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-resource.png)
+![Ban Resource](screenshots/ban-resource.png)
 
 ### Ban Action
 
-![Ban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-action.png)
+![Ban Action](screenshots/ban-action.png)
 
 ### Ban Bulk Action
 
-![Ban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-bulk-action.png)
+![Ban Bulk Action](screenshots/ban-bulk-action.png)
 
 ### Ban Modal
 
-![Ban Modal](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-modal.png)
+![Ban Modal](screenshots/ban-modal.png)
 
 ### Unban Action
 
-![Unban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-action.png)
+![Unban Action](screenshots/unban-action.png)
 
 ### Unban Bulk Action
 
-![Unban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-bulk-action.png)
+![Unban Bulk Action](screenshots/unban-bulk-action.png)
 
 ### Unban Modal
 
-![Unban Modal](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-modal.png)
+![Unban Modal](screenshots/unban-modal.png)
 
 ## Changelog
 
