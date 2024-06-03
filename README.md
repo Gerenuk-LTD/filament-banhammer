@@ -10,6 +10,30 @@
 
 This package uses [mchev/banhammer](https://github.com/mchev/banhammer) to add model banning functionality to filament.
 
+## Table of Contents
+1. [Introduction](#filament-banhammer)
+2. [Version Compatibility](#version-compatibility)
+3. [Usage](#usage)
+    - [Registering the Plugin](#usage)
+    - [Ban](#ban)
+    - [Unban](#unban)
+    - [Ban Bulk](#ban-bulk)
+    - [Unban Bulk](#unban-bulk)
+4. [Testing](#testing)
+5. [Screenshots](#screenshots)
+    - [Resource](#resource)
+    - [Ban Action](#ban-action)
+    - [Ban Bulk Action](#ban-bulk-action)
+    - [Ban Modal](#ban-modal)
+    - [Unban Action](#unban)
+    - [Unban Bulk Action](#unban-bulk)
+    - [Unban Modal](#unban-modal)
+6. [Changelog](#changelog)
+7. [Contributing](#contributing)
+8. [Security Vulnerabilities](#security-vulnerabilities)
+9. [Credits](#credits)
+10. [License](#license)
+
 ## Version Compatibility
 
 | Plugin | Filament | Laravel | PHP      |
@@ -472,6 +496,8 @@ public function getFilamentBanhammerTitleAttribute()
 ```
 > This specifies the property to display in the bans resource.
 
+### Ban
+
 To be able to ban a resource simply add the `Ban` action:
 
 ```php
@@ -494,6 +520,8 @@ public static function table(Table $table): Table
     <summary>Click for screenshot</summary>
     ![Ban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-action.png)
 </details>
+
+### Unban
 
 To be able to unban a resource simply add the `Unban` action:
 
@@ -519,6 +547,8 @@ public static function table(Table $table): Table
     ![Unban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-action.png)
 </details>
 
+### Ban Bulk
+
 To be able to bulk ban a resource simply add the `BanBulk` action:
 
 ```php
@@ -541,6 +571,8 @@ public static function table(Table $table): Table
     <summary>Click for screenshot</summary>
     ![Ban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-bulk-action.png)
 </details>
+
+### Unban Bulk
 
 To be able to bulk unban a resource simply add the `UnbanBulk` action:
 
