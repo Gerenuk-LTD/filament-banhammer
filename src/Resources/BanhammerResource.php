@@ -2,6 +2,7 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources;
 
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\ActionGroup;
@@ -14,7 +15,6 @@ use Gerenuk\FilamentBanhammer\Resources\Actions\EditBanBulkAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanBulkAction;
 use Gerenuk\FilamentBanhammer\Resources\BanhammerResource\Pages;
-use Malzariey\FilamentDaterangepickerFilter\Filters\DateRangeFilter;
 
 class BanhammerResource extends Resource
 {
@@ -71,9 +71,10 @@ class BanhammerResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                DateRangeFilter::make('expired_at'),
-                DateRangeFilter::make('created_at'),
-                DateRangeFilter::make('updated_at'),
+                DateTimePicker::make('expired_at'),
+                DateTimePicker::make('created_at')
+                    ->label('Banned at'),
+                DateTimePicker::make('updated_at'),
             ])
             ->actions([
                 ActionGroup::make([
