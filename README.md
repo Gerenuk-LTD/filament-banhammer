@@ -518,7 +518,7 @@ public static function table(Table $table): Table
 
 <details>
     <summary>Click for screenshot</summary>
-    ![Ban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-action.png)
+    ![Ban Action](screenshots/ban-action.png)
 </details>
 
 ### Unban
@@ -544,7 +544,7 @@ public static function table(Table $table): Table
 
 <details>
     <summary>Click for screenshot</summary>
-    ![Unban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-action.png)
+    ![Unban Action](screenshots/unban-action.png)
 </details>
 
 ### Ban Bulk
@@ -569,7 +569,7 @@ public static function table(Table $table): Table
 
 <details>
     <summary>Click for screenshot</summary>
-    ![Ban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-bulk-action.png)
+    ![Ban Bulk Action](screenshots/ban-bulk-action.png)
 </details>
 
 ### Unban Bulk
@@ -595,7 +595,7 @@ public static function table(Table $table): Table
 
 <details>
     <summary>Click for screenshot</summary>
-    ![Unban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-bulk-action.png)
+    ![Unban Bulk Action](screenshots/unban-bulk-action.png)
 </details>
 
 ## Testing
@@ -608,31 +608,31 @@ composer test
 
 ### Resource
 
-![Ban Resource](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-resource.png)
+![Ban Resource](screenshots/ban-resource.png)
 
 ### Ban Action
 
-![Ban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-action.png)
+![Ban Action](screenshots/ban-action.png)
 
 ### Ban Bulk Action
 
-![Ban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-bulk-action.png)
+![Ban Bulk Action](screenshots/ban-bulk-action.png)
 
 ### Ban Modal
 
-![Ban Modal](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/ban-modal.png)
+![Ban Modal](screenshots/ban-modal.png)
 
 ### Unban Action
 
-![Unban Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-action.png)
+![Unban Action](screenshots/unban-action.png)
 
 ### Unban Bulk Action
 
-![Unban Bulk Action](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-bulk-action.png)
+![Unban Bulk Action](screenshots/unban-bulk-action.png)
 
 ### Unban Modal
 
-![Unban Modal](https://raw.githubusercontent.com/Gerenuk-LTD/filament-banhammer/main/screenshots/unban-modal.png)
+![Unban Modal](screenshots/unban-modal.png)
 
 ## Changelog
 
