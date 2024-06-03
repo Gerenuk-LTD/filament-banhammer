@@ -75,16 +75,16 @@ class BanhammerResource extends Resource
             ->filters([
                 Filter::make('expired_at')
                     ->form([
-                        DatePicker::make('unbanned_at')
+                        DatePicker::make('unbanned_at'),
                     ])
-                ->query(function (Builder $query, array $data) {
-                    return $query
-                        ->when($data['unbanned_at'],
-                            fn (Builder $query, $date): Builder => $query->whereDate('expired_at', '=', $date));
-                }),
+                    ->query(function (Builder $query, array $data) {
+                        return $query
+                            ->when($data['unbanned_at'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('expired_at', '=', $date));
+                    }),
                 Filter::make('created_at')
                     ->form([
-                        DatePicker::make('banned_at')
+                        DatePicker::make('banned_at'),
                     ])
                     ->query(function (Builder $query, array $data) {
                         return $query
