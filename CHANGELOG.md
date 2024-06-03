@@ -2,6 +2,14 @@
 
 All notable changes to `filament-banhammer` will be documented in this file.
 
+## v1.1.1 - 2024-06-03
+
+### What's Changed
+
+* fix: broken date filters sorted by @KieranLProctor in https://github.com/Gerenuk-LTD/filament-banhammer/pull/19
+
+**Full Changelog**: https://github.com/Gerenuk-LTD/filament-banhammer/compare/v1.1.0...v1.1.1
+
 ## v1.1.0 - 2024-06-03
 
 ### What's Changed
