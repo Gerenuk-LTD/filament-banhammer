@@ -52,6 +52,9 @@ You can install the package via composer:
 composer require gerenuk/filament-banhammer
 ```
 
+> [!IMPORTANT]
+> Ensure you have already installed [mchev/banhammer](https://github.com/mchev/banhammer) before doing this.
+
 You can publish the config file with:
 
 ```bash
