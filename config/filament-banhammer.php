@@ -7,7 +7,7 @@ return [
      */
     'resource' => \Gerenuk\FilamentBanhammer\Resources\BanhammerResource::class,
 
-    'navigation_group' => 'Admin'
+    'navigation_group' => 'Admin',
 
     /*
      * Whether an export action should be included on the resource.
