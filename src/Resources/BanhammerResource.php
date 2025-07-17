@@ -24,7 +24,10 @@ class BanhammerResource extends Resource
 
     protected static ?string $slug = 'bans';
 
-    protected static ?string $navigationGroup = 'Admin';
+    public static function getNavigationGroup(): ?string
+    {
+        return config('filament-banhammer.navigation_group');
+    }
 
     protected static ?string $navigationIcon = 'heroicon-o-no-symbol';
 
