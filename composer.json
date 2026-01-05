@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": "^8.2",
-        "filament/filament": "^3.2",
+        "filament/filament": "^4.4",
         "mchev/banhammer": "^2.3",
         "spatie/laravel-package-tools": "^1.16"
     },
