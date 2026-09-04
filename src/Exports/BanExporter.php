@@ -8,11 +8,9 @@ use Filament\Actions\Exports\Models\Export;
 
 class BanExporter extends Exporter
 {
-    protected static ?string $model = null;
-
     public static function getModel(): string
     {
-        return static::$model ??= config('ban.model');
+        return static::$model ?? config('ban.model');
     }
 
     public static function getColumns(): array

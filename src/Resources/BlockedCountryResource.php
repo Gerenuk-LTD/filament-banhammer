@@ -8,7 +8,6 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Gerenuk\FilamentBanhammer\Models\BlockedCountry;
@@ -31,11 +30,6 @@ class BlockedCountryResource extends Resource
         return config('filament-banhammer.navigation_group');
     }
 
-    public static function form(Schema $schema): Schema
-    {
-        return $schema->components(static::codeField());
-    }
-
     public static function table(Table $table): Table
     {
         return $table
@@ -48,6 +42,7 @@ class BlockedCountryResource extends Resource
                     ->label('Add country')
                     ->modalHeading('Block a country')
                     ->modalSubmitActionLabel('Add')
+                    ->authorize(fn () => static::getCreateAuthorizationResponse())
                     ->schema(static::codeField())
                     ->action(fn (array $data) => BlockedCountry::create($data)),
             ])

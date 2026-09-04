@@ -30,3 +30,16 @@ it('still allows a different action not covered by the policy', function () {
     Livewire::test(ListUsers::class)
         ->assertTableActionVisible('unban', $user);
 });
+
+it('excludes individually unauthorized records from a bulk action', function () {
+    Gate::policy(User::class, UserBanPolicy::class);
+
+    $alice = User::create(['name' => 'Alice']); // denied by the policy
+    $bob = User::create(['name' => 'Bob']); // allowed
+
+    Livewire::test(ListUsers::class)
+        ->callTableBulkAction('ban_bulk', [$alice, $bob], data: ['comment' => null, 'expired_at' => null]);
+
+    expect($alice->fresh()->isBanned())->toBeFalse()
+        ->and($bob->fresh()->isBanned())->toBeTrue();
+});

@@ -41,3 +41,11 @@ it('hides the force-delete action unless explicitly enabled', function () {
     Livewire::test(ListBanhammers::class)
         ->assertTableActionHidden('forceDelete', $ban->fresh());
 });
+
+it('hides the restore action on a ban that is not trashed', function () {
+    $user = User::create(['name' => 'Dave']);
+    $ban = $user->ban();
+
+    Livewire::test(ListBanhammers::class)
+        ->assertTableActionHidden('restore', $ban);
+});

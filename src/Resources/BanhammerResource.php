@@ -112,7 +112,9 @@ class BanhammerResource extends Resource
                     EditBanAction::make(),
                     UnbanAction::make(),
                     RestoreAction::make()
-                        ->visible(config('filament-banhammer.trashed.enabled')),
+                        ->visible(fn (Model $record): bool => config('filament-banhammer.trashed.enabled')
+                            && method_exists($record, 'trashed')
+                            && $record->trashed()),
                     ForceDeleteAction::make()
                         ->visible(fn (Model $record): bool => config('filament-banhammer.trashed.enabled')
                             && config('filament-banhammer.trashed.force_delete')

@@ -72,448 +72,65 @@ You can publish the config file with:
 php artisan vendor:publish --tag="filament-banhammer-config"
 ```
 
-This is the contents of the published config file:
+Here's an overview of the published config file (the full file is at [`config/filament-banhammer.php`](config/filament-banhammer.php)):
 
-<details>
-  <summary>Click to expand!</summary>
+```php
+return [
+    // The resource the plugin registers.
+    'resource' => \Gerenuk\FilamentBanhammer\Resources\BanhammerResource::class,
 
-    return [
-    
-        /*
-         * The name of the resource which the plugin should use.
-         */
-        'resource' => \Gerenuk\FilamentBanhammer\Resources\BanhammerResource::class,
-    
-        /*
-         * Whether an export action should be included on the resource.
-         */
-        'show_export' => true,
-    
-        /*
-         * The exporter used by the export bulk action.
-         */
-        'exporter' => \Gerenuk\FilamentBanhammer\Exports\BanExporter::class,
-    
-        /*
-         * Options for soft-deleted bans.
-         */
-        'trashed' => [
-            'enabled' => true,
-            'force_delete' => false,
+    'navigation_group' => 'Admin',
+
+    // Whether an export action is included on the resource.
+    'show_export' => true,
+
+    // The exporter used by the export bulk action.
+    'exporter' => \Gerenuk\FilamentBanhammer\Exports\BanExporter::class,
+
+    // See "Trashed Bans" below.
+    'trashed' => [
+        'enabled' => true,
+        'force_delete' => false,
+    ],
+
+    // See "IP Blocking" below.
+    'ip_blocking' => [
+        'enabled' => true,
+    ],
+
+    // See "Country Blocking" below.
+    'country_blocking' => [
+        'enabled' => false,
+        'resource' => \Gerenuk\FilamentBanhammer\Resources\BlockedCountryResource::class,
+    ],
+
+    // See "Authorization" below.
+    'authorization' => [
+        'ban' => 'ban',
+        'edit_ban' => 'editBan',
+        'unban' => 'unban',
+        'ban_ip' => 'banIp',
+    ],
+
+    // Per-action label, colour, icon, confirmation and notification titles.
+    // `ban`, `edit_ban`, `unban`, `ban_bulk`, `edit_ban_bulk`, `unban_bulk`
+    // and `ban_ip` all share this shape — here's `ban`:
+    'actions' => [
+        'ban' => [
+            'label' => 'ban',
+            'colour' => 'warning',
+            'icon' => 'heroicon-o-no-symbol',
+            'require_confirmation' => true,
+            'notifications' => [
+                'show' => true,
+                'success' => ['title' => 'Banned'],
+                'error' => ['title' => 'Failed'],
+            ],
         ],
-    
-        /*
-         * Options for banning raw IP addresses.
-         */
-        'ip_blocking' => [
-            'enabled' => true,
-        ],
-    
-        /*
-         * Options for managing mchev/banhammer's blocked countries list.
-         */
-        'country_blocking' => [
-            'enabled' => false,
-            'resource' => \Gerenuk\FilamentBanhammer\Resources\BlockedCountryResource::class,
-        ],
-    
-        /*
-         * The policy ability checked before each action runs.
-         */
-        'authorization' => [
-            'ban' => 'ban',
-            'edit_ban' => 'editBan',
-            'unban' => 'unban',
-            'ban_ip' => 'banIp',
-        ],
-    
-        /*
-         * Options for the actions.
-         */
-        'actions' => [
-    
-            /*
-             * Options for the ban action.
-             */
-            'ban' => [
-    
-                /*
-                 * The title of the ban action.
-                 */
-                'label' => 'ban',
-    
-                /*
-                 * The colour of the ban action.
-                 */
-                'colour' => 'warning',
-    
-                /*
-                 * The symbol of the ban action.
-                 */
-                'icon' => 'heroicon-o-no-symbol',
-    
-                /*
-                 * Whether confirming is required when using the ban action.
-                 */
-                'require_confirmation' => true,
-    
-                /*
-                 * Notification options for the ban action.
-                 */
-                'notifications' => [
-    
-                    /*
-                     * Whether a notification should be shown for the ban action.
-                     */
-                    'show' => true,
-    
-                    /*
-                     * Success options for the ban action notifications.
-                     */
-                    'success' => [
-    
-                        /*
-                        * The title of the success notification for the ban action.
-                        */
-                        'title' => 'Banned',
-    
-                    ],
-    
-                    /*
-                     * Error options for the ban action notifications.
-                     */
-                    'error' => [
-    
-                        /*
-                        * The title of the error notification for the ban action.
-                        */
-                        'title' => 'Failed',
-    
-                    ],
-    
-                ],
-    
-            ],
-    
-            /*
-             * Options for the edit ban action.
-             */
-            'edit_ban' => [
-    
-                /*
-                 * The title of the edit ban action.
-                 */
-                'label' => 'edit ban',
-    
-                /*
-                 * The colour of the edit ban action.
-                 */
-                'colour' => 'warning',
-    
-                /*
-                 * The symbol of the edit ban action.
-                 */
-                'icon' => 'heroicon-o-pencil-square',
-    
-                /*
-                 * Whether confirming is required when using the edit ban action.
-                 */
-                'require_confirmation' => true,
-    
-                /*
-                 * Notification options for the edit ban action.
-                 */
-                'notifications' => [
-    
-                    /*
-                     * Whether a notification should be shown for the edit ban action.
-                     */
-                    'show' => true,
-    
-                    /*
-                     * Success options for the edit ban action notifications.
-                     */
-                    'success' => [
-    
-                        /*
-                        * The title of the success notification for the edit ban action.
-                        */
-                        'title' => 'Saved',
-    
-                    ],
-    
-                    /*
-                     * Error options for the edit ban action notifications.
-                     */
-                    'error' => [
-    
-                        /*
-                        * The title of the error notification for the edit ban action.
-                        */
-                        'title' => 'Failed',
-    
-                    ],
-    
-                ],
-    
-            ],
-    
-            /*
-             * Options for the unban action.
-             */
-            'unban' => [
-    
-                /*
-                 * The title of the unban action.
-                 */
-                'label' => 'unban',
-    
-                /*
-                 * The colour of the unban action.
-                 */
-                'colour' => 'warning',
-    
-                /*
-                 * The symbol of the unban action.
-                 */
-                'icon' => 'heroicon-o-no-symbol',
-    
-                /*
-                 * Whether confirming is required when using the unban action.
-                 */
-                'require_confirmation' => true,
-    
-                /*
-                 * Notification options for the unban action.
-                 */
-                'notifications' => [
-    
-                    /*
-                     * Whether a notification should be shown for the unban action.
-                     */
-                    'show' => true,
-    
-                    /*
-                     * Success options for the unban action notifications.
-                     */
-                    'success' => [
-    
-                        /*
-                        * The title of the success notification for the unban action.
-                        */
-                        'title' => 'Unbanned',
-    
-                    ],
-    
-                    /*
-                     * Error options for the unban action notifications.
-                     */
-                    'error' => [
-    
-                        /*
-                        * The title of the error notification for the unban action.
-                        */
-                        'title' => 'Failed',
-    
-                    ],
-    
-                ],
-    
-            ],
-    
-            /*
-             * Options for the ban bulk action.
-             */
-            'ban_bulk' => [
-    
-                /*
-                 * The title of the ban bulk action.
-                 */
-                'label' => 'ban',
-    
-                /*
-                 * The colour of the ban bulk action.
-                 */
-                'colour' => 'warning',
-    
-                /*
-                 * The symbol of the ban bulk action.
-                 */
-                'icon' => 'heroicon-o-no-symbol',
-    
-                /*
-                 * Whether confirming is required when using the ban bulk action.
-                 */
-                'require_confirmation' => true,
-    
-                /*
-                 * Notification options for the ban bulk action.
-                 */
-                'notifications' => [
-    
-                    /*
-                     * Whether a notification should be shown for the ban bulk action.
-                     */
-                    'show' => true,
-    
-                    /*
-                     * Success options for the ban bulk action notifications.
-                     */
-                    'success' => [
-    
-                        /*
-                        * The title of the success notification for the ban bulk action.
-                        */
-                        'title' => 'Banned',
-    
-                    ],
-    
-                    /*
-                     * Error options for the ban bulk action notifications.
-                     */
-                    'error' => [
-    
-                        /*
-                        * The title of the error notification for the ban bulk action.
-                        */
-                        'title' => 'Failures',
-    
-                    ],
-    
-                ],
-    
-            ],
-    
-            /*
-             * Options for the edit ban bulk action.
-             */
-            'edit_ban_bulk' => [
-    
-                /*
-                 * The title of the edit ban bulk action.
-                 */
-                'label' => 'edit ban',
-    
-                /*
-                 * The colour of the edit ban bulk action.
-                 */
-                'colour' => 'warning',
-    
-                /*
-                 * The symbol of the edit ban bulk action.
-                 */
-                'icon' => 'heroicon-o-pencil-square',
-    
-                /*
-                 * Whether confirming is required when using the edit ban bulk action.
-                 */
-                'require_confirmation' => true,
-    
-                /*
-                 * Notification options for the edit ban bulk action.
-                 */
-                'notifications' => [
-    
-                    /*
-                     * Whether a notification should be shown for the edit ban bulk action.
-                     */
-                    'show' => true,
-    
-                    /*
-                     * Success options for the edit ban bulk action notifications.
-                     */
-                    'success' => [
-    
-                        /*
-                        * The title of the success notification for the edit ban bulk action.
-                        */
-                        'title' => 'Saved',
-    
-                    ],
-    
-                    /*
-                     * Error options for the edit ban bulk action notifications.
-                     */
-                    'error' => [
-    
-                        /*
-                        * The title of the error notification for the edit ban bulk action.
-                        */
-                        'title' => 'Failures',
-    
-                    ],
-    
-                ],
-    
-            ],
-    
-            /*
-             * Options for the unban bulk action.
-             */
-            'unban_bulk' => [
-    
-                /*
-                 * The title of the unban bulk action.
-                 */
-                'label' => 'unban',
-    
-                /*
-                 * The colour of the unban bulk action.
-                 */
-                'colour' => 'warning',
-    
-                /*
-                 * The symbol of the unban bulk action.
-                 */
-                'icon' => 'heroicon-o-no-symbol',
-    
-                /*
-                 * Whether confirming is required when using the unban bulk action.
-                 */
-                'require_confirmation' => true,
-    
-                /*
-                 * Notification options for the unban bulk action.
-                 */
-                'notifications' => [
-    
-                    /*
-                     * Whether a notification should be shown for the unban bulk action.
-                     */
-                    'show' => true,
-    
-                    /*
-                     * Success options for the unban bulk action notifications.
-                     */
-                    'success' => [
-    
-                        /*
-                        * The title of the success notification for the unban bulk action.
-                        */
-                        'title' => 'Unbanned',
-    
-                    ],
-    
-                    /*
-                     * Error options for the unban bulk action notifications.
-                     */
-                    'error' => [
-    
-                        /*
-                        * The title of the error notification for the unban bulk action.
-                        */
-                        'title' => 'Failures',
-    
-                    ],
-    
-                ],
-    
-            ],
-    
-        ],
-    
-    ];
-</details>
+        // 'edit_ban' => [...], 'unban' => [...], 'ban_bulk' => [...], ...
+    ],
+];
+```
 
 ## Usage
 
@@ -538,7 +155,7 @@ class AdminPanelProvider extends PanelProvider
     }
 }
 ```
-For each model you have added the `use Banhammer` trait to, you will also need to add the following method:
+For each model you have added the `Bannable` trait to, you will also need to add the following method:
 
 ```php
 public function getFilamentBanhammerTitleAttribute()
@@ -670,7 +287,7 @@ The bundled resource includes a "Ban IP" header action that creates an IP-only b
 
 ### Country Blocking
 
-`mchev/banhammer` can block requests by country, but manages the blocked list through its own `blocked_countries` config value. Enabling `country_blocking` adds a bundled resource for managing that list from the database instead, and merges it into `ban.blocked_countries` on every request:
+`mchev/banhammer` can block requests by country, but manages the blocked list through its own `blocked_countries` config value. Enabling `country_blocking` adds a bundled resource for managing that list from the database instead, and merges it into `ban.blocked_countries` on every application boot:
 
 ```php
 'country_blocking' => [
@@ -679,6 +296,9 @@ The bundled resource includes a "Ban IP" header action that creates an IP-only b
 ```
 
 This package's migration needs to have run first — see [Installation](#installation). Note this only manages the *list*; you still need `mchev/banhammer`'s own `BANHAMMER_BLOCK_BY_COUNTRY` env variable (or `block_by_country` config value) set to actually enable the country-blocking middleware.
+
+> [!NOTE]
+> On Octane or a long-running worker, the application boots once and is reused across requests, so a change made in the blocked countries resource won't take effect until the worker restarts.
 
 ## Testing
 

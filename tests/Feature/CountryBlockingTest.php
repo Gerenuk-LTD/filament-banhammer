@@ -3,6 +3,8 @@
 use Gerenuk\FilamentBanhammer\FilamentBanhammerServiceProvider;
 use Gerenuk\FilamentBanhammer\Models\BlockedCountry;
 use Gerenuk\FilamentBanhammer\Resources\BlockedCountryResource\Pages\ListBlockedCountries;
+use Gerenuk\FilamentBanhammer\Tests\Fixtures\BlockedCountryPolicy;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Livewire;
 
 it('uppercases the stored country code', function () {
@@ -53,4 +55,20 @@ it('rejects a duplicate country code', function () {
         ->assertHasTableActionErrors(['code' => 'unique']);
 
     expect(BlockedCountry::count())->toBe(1);
+});
+
+it('hides adding a country when a policy denies it', function () {
+    Gate::policy(BlockedCountry::class, BlockedCountryPolicy::class);
+
+    Livewire::test(ListBlockedCountries::class)
+        ->assertTableActionHidden('add');
+});
+
+it('hides deleting a country when a policy denies it', function () {
+    Gate::policy(BlockedCountry::class, BlockedCountryPolicy::class);
+
+    $country = BlockedCountry::create(['code' => 'nz']);
+
+    Livewire::test(ListBlockedCountries::class)
+        ->assertTableActionHidden('delete', $country);
 });

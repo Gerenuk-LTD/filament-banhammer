@@ -8,6 +8,6 @@ class UserBanPolicy
 {
     public function ban(?User $user, User $target): bool
     {
-        return false;
+        return $target->name !== 'Alice';
     }
 }

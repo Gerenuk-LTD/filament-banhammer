@@ -29,10 +29,17 @@ class FilamentBanhammerServiceProvider extends PackageServiceProvider
             return;
         }
 
-        if (! Schema::hasTable('filament_banhammer_blocked_countries')) {
+        // The database may not be reachable yet (e.g. a fresh install, before
+        // migrating), and every artisan command boots this provider — so a
+        // connection failure here shouldn't break the console.
+        try {
+            if (! Schema::hasTable('filament_banhammer_blocked_countries')) {
+                return;
+            }
+
+            config(['ban.blocked_countries' => BlockedCountry::pluck('code')->all()]);
+        } catch (\Throwable) {
             return;
         }
-
-        config(['ban.blocked_countries' => BlockedCountry::pluck('code')->all()]);
     }
 }
