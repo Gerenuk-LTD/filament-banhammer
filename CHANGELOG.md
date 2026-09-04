@@ -2,6 +2,22 @@
 
 All notable changes to `filament-banhammer` will be documented in this file.
 
+## v2.0.0 - 2026-09-04
+
+### What's Changed
+
+* build(deps): bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/Gerenuk-LTD/filament-banhammer/pull/29
+* build(deps): bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/Gerenuk-LTD/filament-banhammer/pull/38
+* build(deps): bump stefanzweifel/git-auto-commit-action from 6 to 7 by @dependabot[bot] in https://github.com/Gerenuk-LTD/filament-banhammer/pull/33
+* build(deps): bump dependabot/fetch-metadata from 2.5.0 to 3.0.0 by @dependabot[bot] in https://github.com/Gerenuk-LTD/filament-banhammer/pull/46
+* build(deps): bump dependabot/fetch-metadata from 3.0.0 to 3.1.0 by @dependabot[bot] in https://github.com/Gerenuk-LTD/filament-banhammer/pull/48
+* build(deps): bump ramsey/composer-install from 3 to 4 by @dependabot[bot] in https://github.com/Gerenuk-LTD/filament-banhammer/pull/44
+* build(deps): bump actions/checkout from 4 to 7 by @dependabot[bot] in https://github.com/Gerenuk-LTD/filament-banhammer/pull/47
+* build(deps): update filament/filament requirement from ^3.2 to ^5.7 by @dependabot[bot] in https://github.com/Gerenuk-LTD/filament-banhammer/pull/49
+* Upgrade to Filament v5, fix broken actions, add authorization/IP/country blocking by @KieranLProctor in https://github.com/Gerenuk-LTD/filament-banhammer/pull/50
+
+**Full Changelog**: https://github.com/Gerenuk-LTD/filament-banhammer/compare/v1.2.0...v2.0.0
+
 ## v1.2.0 - 2025-07-18
 
 ### What's Changed
