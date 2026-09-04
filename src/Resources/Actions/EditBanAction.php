@@ -6,8 +6,12 @@ use Filament\Actions\Action;
 use Filament\Actions\Concerns\CanCustomizeProcess;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+
+use function Filament\get_authorization_response;
 
 class EditBanAction extends Action
 {
@@ -34,6 +38,8 @@ class EditBanAction extends Action
 
         $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban.require_confirmation'));
 
+        $this->authorize(fn (Model $record) => get_authorization_response(config('filament-banhammer.authorization.edit_ban'), $record));
+
         $this->schema($this->getFormSchema());
 
         $this->fillForm(function (Model $record): array {
@@ -41,10 +47,9 @@ class EditBanAction extends Action
         });
 
         $this->action(function (): void {
-            $result = $this->process(static fn (array $data, Model $record) => $record->update([
-                'comment' => $data['comment'],
-                'expired_at' => $data['expired_at'],
-            ]));
+            $result = $this->process(static fn (array $data, Model $record) => $record->update(
+                blank($record->getAttribute('bannable_type')) ? $data : Arr::except($data, 'ip')
+            ));
 
             if (! config('filament-banhammer.actions.edit_ban.notifications.show')) {
                 return;
@@ -69,6 +74,10 @@ class EditBanAction extends Action
         return [
             Section::make()
                 ->schema([
+                    TextInput::make('ip')
+                        ->label('IP address')
+                        ->ip()
+                        ->visible(fn (?Model $record): bool => blank($record?->getAttribute('bannable_type'))),
                     Textarea::make('comment')
                         ->nullable(),
                     DateTimePicker::make('expired_at')

@@ -13,18 +13,6 @@ parameters:
 			path: src/Resources/Actions/BanBulkAction.php
 
 		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:unban\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Resources/Actions/UnbanAction.php
-
-		-
-			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:unban\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Resources/Actions/UnbanBulkAction.php
-
-		-
 			message: '#^Using nullsafe property access "\?\-\>name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1

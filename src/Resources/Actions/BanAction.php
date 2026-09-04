@@ -9,6 +9,8 @@ use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Model;
 
+use function Filament\get_authorization_response;
+
 class BanAction extends Action
 {
     use CanCustomizeProcess;
@@ -33,6 +35,8 @@ class BanAction extends Action
         $this->modalSubmitActionLabel('Confirm');
 
         $this->requiresConfirmation(config('filament-banhammer.actions.ban.require_confirmation'));
+
+        $this->authorize(fn (Model $record) => get_authorization_response(config('filament-banhammer.authorization.ban'), $record));
 
         $this->schema($this->getFormSchema());
 

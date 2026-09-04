@@ -6,6 +6,8 @@ use Filament\Actions\Action;
 use Filament\Actions\Concerns\CanCustomizeProcess;
 use Illuminate\Database\Eloquent\Model;
 
+use function Filament\get_authorization_response;
+
 class UnbanAction extends Action
 {
     use CanCustomizeProcess;
@@ -31,18 +33,10 @@ class UnbanAction extends Action
 
         $this->requiresConfirmation(config('filament-banhammer.actions.unban.require_confirmation'));
 
+        $this->authorize(fn (Model $record) => get_authorization_response(config('filament-banhammer.authorization.unban'), $record));
+
         $this->action(function (): void {
-            $result = $this->process(static function (Model $record): bool {
-                $bannable = static::resolveBannable($record);
-
-                if (! $bannable) {
-                    return false;
-                }
-
-                $bannable->unban();
-
-                return true;
-            });
+            $result = $this->process(static fn (Model $record): bool => static::unban($record));
 
             if (! config('filament-banhammer.actions.unban.notifications.show')) {
                 return;
@@ -63,15 +57,22 @@ class UnbanAction extends Action
     }
 
     /**
-     * Resolve the bannable model to unban, whether this action is mounted on a
-     * bannable model directly, or on a ban record (e.g. the bundled Banhammer resource).
+     * Unbans $record, whether it's a bannable model, a ban record for one, or an IP-only ban.
      */
-    public static function resolveBannable(Model $record): ?Model
+    public static function unban(Model $record): bool
     {
         if (method_exists($record, 'unban')) {
-            return $record;
+            $record->unban();
+
+            return true;
         }
 
-        return $record->bannable ?? null;
+        if ($bannable = $record->bannable ?? null) {
+            $bannable->unban();
+
+            return true;
+        }
+
+        return (bool) $record->delete();
     }
 }

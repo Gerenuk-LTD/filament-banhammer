@@ -7,6 +7,8 @@ use Filament\Actions\Concerns\CanCustomizeProcess;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+use function Filament\get_authorization_response;
+
 class UnbanBulkAction extends BulkAction
 {
     use CanCustomizeProcess;
@@ -32,9 +34,11 @@ class UnbanBulkAction extends BulkAction
 
         $this->requiresConfirmation(config('filament-banhammer.actions.unban_bulk.require_confirmation'));
 
+        $this->authorizeIndividualRecords(fn (Model $record) => get_authorization_response(config('filament-banhammer.authorization.unban'), $record));
+
         $this->action(function (): void {
             $this->process(static fn (Collection $records) => $records->each(
-                fn (Model $record) => UnbanAction::resolveBannable($record)?->unban()
+                fn (Model $record) => UnbanAction::unban($record)
             ));
 
             if (! config('filament-banhammer.actions.unban_bulk.notifications.show')) {

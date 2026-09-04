@@ -20,6 +20,10 @@ This package uses [mchev/banhammer](https://github.com/mchev/banhammer) to add m
     - [Unban](#unban)
     - [Ban Bulk](#ban-bulk)
     - [Unban Bulk](#unban-bulk)
+    - [Authorization](#authorization)
+    - [Trashed Bans](#trashed-bans)
+    - [IP Blocking](#ip-blocking)
+    - [Country Blocking](#country-blocking)
 5. [Testing](#testing)
 6. [Screenshots](#screenshots)
     - [Resource](#resource)
@@ -56,6 +60,12 @@ composer require gerenuk/filament-banhammer
 > [!IMPORTANT]
 > Ensure you have already installed [mchev/banhammer](https://github.com/mchev/banhammer) before doing this.
 
+This package's own migration (for the [Country Blocking](#country-blocking) feature) is picked up automatically by `php artisan migrate` — no `vendor:publish` needed, unless you'd rather have the migration file alongside your own, in which case publish it with:
+
+```bash
+php artisan vendor:publish --tag="filament-banhammer-migrations"
+```
+
 You can publish the config file with:
 
 ```bash
@@ -83,6 +93,39 @@ This is the contents of the published config file:
          * The exporter used by the export bulk action.
          */
         'exporter' => \Gerenuk\FilamentBanhammer\Exports\BanExporter::class,
+    
+        /*
+         * Options for soft-deleted bans.
+         */
+        'trashed' => [
+            'enabled' => true,
+            'force_delete' => false,
+        ],
+    
+        /*
+         * Options for banning raw IP addresses.
+         */
+        'ip_blocking' => [
+            'enabled' => true,
+        ],
+    
+        /*
+         * Options for managing mchev/banhammer's blocked countries list.
+         */
+        'country_blocking' => [
+            'enabled' => false,
+            'resource' => \Gerenuk\FilamentBanhammer\Resources\BlockedCountryResource::class,
+        ],
+    
+        /*
+         * The policy ability checked before each action runs.
+         */
+        'authorization' => [
+            'ban' => 'ban',
+            'edit_ban' => 'editBan',
+            'unban' => 'unban',
+            'ban_ip' => 'banIp',
+        ],
     
         /*
          * Options for the actions.
@@ -587,6 +630,55 @@ public static function table(Table $table): Table
     }
 ```
 > A ban resource is included by default if you would prefer to use that instead.
+
+### Authorization
+
+`BanAction`, `BanBulkAction`, `UnbanAction`, `UnbanBulkAction`, `EditBanAction`, `EditBanBulkAction` and `BanIpAction` each check a Laravel policy ability against the record they're acting on, named in the `authorization` config key (`ban`, `unban`, `editBan` and `banIp` by default). If the record's model has no policy, or the policy has no method by that name, the action is allowed — so nothing changes until you opt in by adding the method:
+
+```php
+class UserPolicy
+{
+    public function ban(?User $user, User $target): bool
+    {
+        return $user?->isAdmin() ?? false;
+    }
+}
+```
+
+Restoring and force-deleting bans (see [Trashed Bans](#trashed-bans)) aren't in the `authorization` config — they use Filament's own `restore`/`forceDelete` resource policy conventions instead.
+
+### Trashed Bans
+
+Bans are soft-deleted (via `mchev/banhammer`'s `Ban` model), so the bundled resource ships a "trashed" filter and restore actions by default. Force-deleting a ban permanently is opt-in:
+
+```php
+'trashed' => [
+    'enabled' => true,
+    'force_delete' => false,
+],
+```
+
+### IP Blocking
+
+The bundled resource includes a "Ban IP" header action that creates an IP-only ban with no bannable model attached, using `mchev/banhammer`'s IP bans. Existing bans, including IP-only ones, can be edited (to correct the IP) and unbanned like any other row. Disable it with:
+
+```php
+'ip_blocking' => [
+    'enabled' => false,
+],
+```
+
+### Country Blocking
+
+`mchev/banhammer` can block requests by country, but manages the blocked list through its own `blocked_countries` config value. Enabling `country_blocking` adds a bundled resource for managing that list from the database instead, and merges it into `ban.blocked_countries` on every request:
+
+```php
+'country_blocking' => [
+    'enabled' => true,
+],
+```
+
+This package's migration needs to have run first — see [Installation](#installation). Note this only manages the *list*; you still need `mchev/banhammer`'s own `BANHAMMER_BLOCK_BY_COUNTRY` env variable (or `block_by_country` config value) set to actually enable the country-blocking middleware.
 
 ## Testing
 

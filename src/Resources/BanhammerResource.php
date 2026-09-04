@@ -6,11 +6,16 @@ use BackedEnum;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\ExportBulkAction;
+use Filament\Actions\ForceDeleteAction;
+use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\RestoreAction;
+use Filament\Actions\RestoreBulkAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Gerenuk\FilamentBanhammer\Resources\Actions\EditBanAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\EditBanBulkAction;
@@ -18,6 +23,7 @@ use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanBulkAction;
 use Gerenuk\FilamentBanhammer\Resources\BanhammerResource\Pages;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class BanhammerResource extends Resource
 {
@@ -98,11 +104,20 @@ class BanhammerResource extends Resource
                             ->when($data['banned_at'],
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '=', $date));
                     }),
+                TrashedFilter::make()
+                    ->visible(config('filament-banhammer.trashed.enabled')),
             ])
             ->recordActions([
                 ActionGroup::make([
                     EditBanAction::make(),
                     UnbanAction::make(),
+                    RestoreAction::make()
+                        ->visible(config('filament-banhammer.trashed.enabled')),
+                    ForceDeleteAction::make()
+                        ->visible(fn (Model $record): bool => config('filament-banhammer.trashed.enabled')
+                            && config('filament-banhammer.trashed.force_delete')
+                            && method_exists($record, 'trashed')
+                            && $record->trashed()),
                 ])->tooltip('Actions'),
             ])
             ->toolbarActions([
@@ -112,6 +127,10 @@ class BanhammerResource extends Resource
                         ->visible(config('filament-banhammer.show_export')),
                     EditBanBulkAction::make(),
                     UnbanBulkAction::make(),
+                    RestoreBulkAction::make()
+                        ->visible(config('filament-banhammer.trashed.enabled')),
+                    ForceDeleteBulkAction::make()
+                        ->visible(config('filament-banhammer.trashed.enabled') && config('filament-banhammer.trashed.force_delete')),
                 ]),
             ]);
     }

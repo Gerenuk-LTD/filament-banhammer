@@ -25,10 +25,13 @@ class FilamentBanhammerPlugin implements Plugin
 
     public function register(Panel $panel): void
     {
-        $panel
-            ->resources([
-                config('filament-banhammer.resource'),
-            ]);
+        $resources = [config('filament-banhammer.resource')];
+
+        if (config('filament-banhammer.country_blocking.enabled')) {
+            $resources[] = config('filament-banhammer.country_blocking.resource');
+        }
+
+        $panel->resources($resources);
     }
 
     public function boot(Panel $panel): void

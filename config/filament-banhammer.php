@@ -2,6 +2,7 @@
 
 use Gerenuk\FilamentBanhammer\Exports\BanExporter;
 use Gerenuk\FilamentBanhammer\Resources\BanhammerResource;
+use Gerenuk\FilamentBanhammer\Resources\BlockedCountryResource;
 
 return [
 
@@ -21,6 +22,48 @@ return [
      * The exporter used by the export bulk action.
      */
     'exporter' => BanExporter::class,
+
+    /*
+     * Options for soft-deleted bans: a "trashed" filter and restore
+     * actions on the bundled resource, and (optionally) force-deleting.
+     */
+    'trashed' => [
+        'enabled' => true,
+        'force_delete' => false,
+    ],
+
+    /*
+     * Lets admins ban a raw IP address, with no bannable model attached,
+     * from the bundled resource. Powered by mchev/banhammer's IP bans.
+     */
+    'ip_blocking' => [
+        'enabled' => true,
+    ],
+
+    /*
+     * Manages mchev/banhammer's `blocked_countries` list from a bundled
+     * resource instead of the `ban` config file. Requires running this
+     * package's migrations. Does not touch mchev/banhammer's own
+     * `block_by_country` toggle, which stays config/env-driven.
+     */
+    'country_blocking' => [
+        'enabled' => false,
+        'resource' => BlockedCountryResource::class,
+    ],
+
+    /*
+     * The Laravel policy ability checked before each action runs. If the
+     * target model has no policy, or the policy has no method with this
+     * name, the action is allowed — see the "Authorization" README section.
+     * Restoring and force-deleting bans use Filament's own "restore" and
+     * "forceDelete" resource policy conventions instead, so aren't listed here.
+     */
+    'authorization' => [
+        'ban' => 'ban',
+        'edit_ban' => 'editBan',
+        'unban' => 'unban',
+        'ban_ip' => 'banIp',
+    ],
 
     /*
      * Options for the actions.
@@ -403,6 +446,21 @@ return [
 
             ],
 
+        ],
+
+        /*
+         * Options for the ban IP action.
+         */
+        'ban_ip' => [
+            'label' => 'ban IP',
+            'colour' => 'danger',
+            'icon' => 'heroicon-o-signal-slash',
+            'require_confirmation' => false,
+            'notifications' => [
+                'show' => true,
+                'success' => ['title' => 'Banned'],
+                'error' => ['title' => 'Failed'],
+            ],
         ],
 
     ],

@@ -10,6 +10,8 @@ use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+use function Filament\get_authorization_response;
+
 class EditBanBulkAction extends BulkAction
 {
     use CanCustomizeProcess;
@@ -34,6 +36,8 @@ class EditBanBulkAction extends BulkAction
         $this->modalSubmitActionLabel('Confirm');
 
         $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban_bulk.require_confirmation'));
+
+        $this->authorizeIndividualRecords(fn (Model $record) => get_authorization_response(config('filament-banhammer.authorization.edit_ban'), $record));
 
         $this->schema($this->getFormSchema());
 
