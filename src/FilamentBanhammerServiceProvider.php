@@ -3,6 +3,7 @@
 namespace Gerenuk\FilamentBanhammer;
 
 use Gerenuk\FilamentBanhammer\Models\BlockedCountry;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -37,7 +38,11 @@ class FilamentBanhammerServiceProvider extends PackageServiceProvider
                 return;
             }
 
-            config(['ban.blocked_countries' => BlockedCountry::pluck('code')->all()]);
+            config(['ban.blocked_countries' => Cache::remember(
+                BlockedCountry::CACHE_KEY,
+                now()->addMinutes(5),
+                fn () => BlockedCountry::pluck('code')->all(),
+            )]);
         } catch (\Throwable) {
             return;
         }

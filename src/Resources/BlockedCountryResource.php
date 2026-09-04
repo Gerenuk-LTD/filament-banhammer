@@ -70,10 +70,8 @@ class BlockedCountryResource extends Resource
                 ->required()
                 ->length(2)
                 ->alpha()
-                // Normalize before validating, so uniqueness is checked against
-                // the same casing the BlockedCountry model persists.
-                ->live(onBlur: true)
-                ->afterStateUpdated(fn (?string $state, callable $set) => $set('code', strtoupper((string) $state)))
+                // Validate against the same casing BlockedCountry's mutator persists.
+                ->mutateStateForValidationUsing(fn (?string $state): string => strtoupper((string) $state))
                 ->unique(table: BlockedCountry::class, ignoreRecord: true),
         ];
     }

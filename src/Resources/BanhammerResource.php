@@ -23,7 +23,6 @@ use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanAction;
 use Gerenuk\FilamentBanhammer\Resources\Actions\UnbanBulkAction;
 use Gerenuk\FilamentBanhammer\Resources\BanhammerResource\Pages;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 class BanhammerResource extends Resource
 {
@@ -105,35 +104,26 @@ class BanhammerResource extends Resource
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '=', $date));
                     }),
                 TrashedFilter::make()
-                    ->visible(config('filament-banhammer.trashed.enabled')),
+                    ->visible(static::isTrashedUiEnabled()),
             ])
             ->recordActions([
-                ActionGroup::make([
+                ActionGroup::make(array_filter([
                     EditBanAction::make(),
                     UnbanAction::make(),
-                    RestoreAction::make()
-                        ->visible(fn (Model $record): bool => config('filament-banhammer.trashed.enabled')
-                            && method_exists($record, 'trashed')
-                            && $record->trashed()),
-                    ForceDeleteAction::make()
-                        ->visible(fn (Model $record): bool => config('filament-banhammer.trashed.enabled')
-                            && config('filament-banhammer.trashed.force_delete')
-                            && method_exists($record, 'trashed')
-                            && $record->trashed()),
-                ])->tooltip('Actions'),
+                    static::isTrashedUiEnabled() ? RestoreAction::make() : null,
+                    static::isForceDeleteEnabled() ? ForceDeleteAction::make() : null,
+                ]))->tooltip('Actions'),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
+                BulkActionGroup::make(array_filter([
                     ExportBulkAction::make()
                         ->exporter(config('filament-banhammer.exporter'))
                         ->visible(config('filament-banhammer.show_export')),
                     EditBanBulkAction::make(),
                     UnbanBulkAction::make(),
-                    RestoreBulkAction::make()
-                        ->visible(config('filament-banhammer.trashed.enabled')),
-                    ForceDeleteBulkAction::make()
-                        ->visible(config('filament-banhammer.trashed.enabled') && config('filament-banhammer.trashed.force_delete')),
-                ]),
+                    static::isTrashedUiEnabled() ? RestoreBulkAction::make() : null,
+                    static::isForceDeleteEnabled() ? ForceDeleteBulkAction::make() : null,
+                ])),
             ]);
     }
 
@@ -147,5 +137,15 @@ class BanhammerResource extends Resource
     public static function getModel(): string
     {
         return config('ban.model');
+    }
+
+    protected static function isTrashedUiEnabled(): bool
+    {
+        return (bool) config('filament-banhammer.trashed.enabled');
+    }
+
+    protected static function isForceDeleteEnabled(): bool
+    {
+        return static::isTrashedUiEnabled() && config('filament-banhammer.trashed.force_delete');
     }
 }

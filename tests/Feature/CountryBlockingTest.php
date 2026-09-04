@@ -22,6 +22,20 @@ it('merges blocked countries into the ban config when enabled', function () {
     expect(config('ban.blocked_countries'))->toEqualCanonicalizing(['US', 'GB']);
 });
 
+it('picks up a change after the list is cached, since writes invalidate the cache', function () {
+    config()->set('filament-banhammer.country_blocking.enabled', true);
+
+    $provider = app()->getProvider(FilamentBanhammerServiceProvider::class);
+
+    BlockedCountry::create(['code' => 'us']);
+    $provider->packageBooted();
+    expect(config('ban.blocked_countries'))->toBe(['US']);
+
+    BlockedCountry::create(['code' => 'gb']);
+    $provider->packageBooted();
+    expect(config('ban.blocked_countries'))->toEqualCanonicalizing(['US', 'GB']);
+});
+
 it('leaves the ban config untouched when disabled', function () {
     config()->set('filament-banhammer.country_blocking.enabled', false);
     config()->set('ban.blocked_countries', ['FR']);

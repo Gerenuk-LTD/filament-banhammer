@@ -48,7 +48,7 @@ class EditBanAction extends Action
 
         $this->action(function (): void {
             $result = $this->process(static fn (array $data, Model $record) => $record->update(
-                blank($record->getAttribute('bannable_type')) ? $data : Arr::except($data, 'ip')
+                static::isIpOnly($record) ? $data : Arr::except($data, 'ip')
             ));
 
             if (! config('filament-banhammer.actions.edit_ban.notifications.show')) {
@@ -77,12 +77,18 @@ class EditBanAction extends Action
                     TextInput::make('ip')
                         ->label('IP address')
                         ->ip()
-                        ->visible(fn (?Model $record): bool => blank($record?->getAttribute('bannable_type'))),
+                        ->required(fn (?Model $record): bool => $record && static::isIpOnly($record))
+                        ->visible(fn (?Model $record): bool => $record && static::isIpOnly($record)),
                     Textarea::make('comment')
                         ->nullable(),
                     DateTimePicker::make('expired_at')
                         ->label('Expires at'),
                 ]),
         ];
+    }
+
+    protected static function isIpOnly(Model $record): bool
+    {
+        return blank($record->getAttribute('bannable_type'));
     }
 }

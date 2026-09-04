@@ -15,7 +15,8 @@ it('bans a raw IP address with no bannable model', function () {
     $ban = Ban::sole();
 
     expect($ban->ip)->toBe('203.0.113.5')
-        ->and($ban->bannable_type)->toBeNull();
+        ->and($ban->bannable_type)->toBeNull()
+        ->and($ban->comment)->toBe('Scraping');
 });
 
 it('unbans an IP-only ban by deleting it', function () {

@@ -33,13 +33,25 @@ it('permanently deletes a trashed ban when force-delete is enabled', function ()
     expect(Ban::withTrashed()->find($ban->id))->toBeNull();
 });
 
-it('hides the force-delete action unless explicitly enabled', function () {
+it('omits the force-delete action unless explicitly enabled', function () {
     $user = User::create(['name' => 'Carol']);
     $ban = $user->ban();
     $ban->delete();
 
     Livewire::test(ListBanhammers::class)
-        ->assertTableActionHidden('forceDelete', $ban->fresh());
+        ->assertTableActionDoesNotExist('forceDelete', record: $ban->fresh());
+});
+
+it('omits the restore and force-delete actions when the trashed UI is disabled', function () {
+    config()->set('filament-banhammer.trashed.enabled', false);
+
+    $user = User::create(['name' => 'Erin']);
+    $ban = $user->ban();
+    $ban->delete();
+
+    Livewire::test(ListBanhammers::class)
+        ->assertTableActionDoesNotExist('restore', record: $ban->fresh())
+        ->assertTableActionDoesNotExist('forceDelete', record: $ban->fresh());
 });
 
 it('hides the restore action on a ban that is not trashed', function () {

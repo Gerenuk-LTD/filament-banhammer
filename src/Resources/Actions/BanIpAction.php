@@ -8,7 +8,6 @@ use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
-use Mchev\Banhammer\IP;
 
 use function Filament\get_authorization_response;
 
@@ -54,7 +53,11 @@ class BanIpAction extends Action
         ]);
 
         $this->action(function (): void {
-            $this->process(static fn (array $data) => IP::ban($data['ip'], [], $data['expired_at']));
+            $this->process(static fn (array $data) => config('ban.model')::create([
+                'ip' => $data['ip'],
+                'comment' => $data['comment'],
+                'expired_at' => $data['expired_at'],
+            ]));
 
             if (! config('filament-banhammer.actions.ban_ip.notifications.show')) {
                 return;
