@@ -1,11 +1,14 @@
 <?php
 
+use Gerenuk\FilamentBanhammer\Exports\BanExporter;
+use Gerenuk\FilamentBanhammer\Resources\BanhammerResource;
+
 return [
 
     /*
      * The name of the resource which the plugin should use.
      */
-    'resource' => \Gerenuk\FilamentBanhammer\Resources\BanhammerResource::class,
+    'resource' => BanhammerResource::class,
 
     'navigation_group' => 'Admin',
 
@@ -13,6 +16,11 @@ return [
      * Whether an export action should be included on the resource.
      */
     'show_export' => true,
+
+    /*
+     * The exporter used by the export bulk action.
+     */
+    'exporter' => BanExporter::class,
 
     /*
      * Options for the actions.

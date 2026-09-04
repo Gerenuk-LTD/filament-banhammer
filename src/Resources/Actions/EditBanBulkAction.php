@@ -2,11 +2,11 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources\Actions;
 
+use Filament\Actions\BulkAction;
 use Filament\Actions\Concerns\CanCustomizeProcess;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
-use Filament\Tables\Actions\BulkAction;
+use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,7 +35,7 @@ class EditBanBulkAction extends BulkAction
 
         $this->requiresConfirmation(config('filament-banhammer.actions.edit_ban_bulk.require_confirmation'));
 
-        $this->form($this->getFormSchema());
+        $this->schema($this->getFormSchema());
 
         $this->action(function (): void {
             $this->process(static fn (array $data, Collection $records) => $records->each(fn (Model $record) => $record->update([

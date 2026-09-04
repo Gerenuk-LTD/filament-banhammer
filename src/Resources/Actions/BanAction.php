@@ -2,11 +2,11 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources\Actions;
 
+use Filament\Actions\Action;
 use Filament\Actions\Concerns\CanCustomizeProcess;
 use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
-use Filament\Tables\Actions\Action;
+use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Model;
 
 class BanAction extends Action
@@ -34,7 +34,7 @@ class BanAction extends Action
 
         $this->requiresConfirmation(config('filament-banhammer.actions.ban.require_confirmation'));
 
-        $this->form($this->getFormSchema());
+        $this->schema($this->getFormSchema());
 
         $this->action(function (): void {
             $result = $this->process(static fn (array $data, Model $record) => $record->ban([

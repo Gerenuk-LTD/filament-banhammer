@@ -37,10 +37,11 @@ This package uses [mchev/banhammer](https://github.com/mchev/banhammer) to add m
 
 ## Version Compatibility
 
-| Plugin | Filament | Laravel | PHP      |
-| ---------- | ---------- | ---------- |----------|
-| 1.x | 3.x | 10.x | 8.x      |
-| 1.x | 3.x | 11.x | 8.2\|8.3 |
+| Plugin | Filament | Laravel     | PHP           |
+| ------ | -------- | ----------- | ------------- |
+| 2.x    | 5.x      | 11.28\|12\|13 | 8.2\|8.3\|8.4 |
+| 1.x    | 3.x      | 10.x        | 8.x           |
+| 1.x    | 3.x      | 11.x        | 8.2\|8.3      |
 
 ## Installation
 
@@ -77,6 +78,11 @@ This is the contents of the published config file:
          * Whether an export action should be included on the resource.
          */
         'show_export' => true,
+    
+        /*
+         * The exporter used by the export bulk action.
+         */
+        'exporter' => \Gerenuk\FilamentBanhammer\Exports\BanExporter::class,
     
         /*
          * Options for the actions.
@@ -514,7 +520,7 @@ public static function table(Table $table): Table
             ->columns([
                 // ...
             ])
-            ->actions([
+            ->recordActions([
                 BanAction::make(),
             ]);
     }
@@ -534,12 +540,12 @@ public static function table(Table $table): Table
             ->columns([
                 // ...
             ])
-            ->actions([
+            ->recordActions([
                 UnbanAction::make(),
             ]);
     }
 ```
-> A ban resource is included by default if you would prefer to use that instead.
+> A ban resource is included by default if you would prefer to use that instead. `UnbanAction` works whether it's placed on your own bannable resource's table (as above) or on the bundled ban resource's table, where the record is a ban itself rather than the bannable model.
 
 ### Ban Bulk
 
@@ -555,7 +561,7 @@ public static function table(Table $table): Table
             ->columns([
                 // ...
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BanBulkAction::make(),
             ]);
     }
@@ -575,7 +581,7 @@ public static function table(Table $table): Table
             ->columns([
                 // ...
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 UnbanBulkAction::make(),
             ]);
     }

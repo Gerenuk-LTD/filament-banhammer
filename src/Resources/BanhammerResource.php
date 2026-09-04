@@ -2,12 +2,13 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources;
 
+use BackedEnum;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\ExportBulkAction;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\BulkActionGroup;
-use Filament\Tables\Actions\ExportBulkAction;
+use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
@@ -20,7 +21,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 class BanhammerResource extends Resource
 {
-    protected static ?string $label = 'Bans';
+    protected static ?string $modelLabel = 'Ban';
+
+    protected static ?string $pluralModelLabel = 'Bans';
 
     protected static ?string $slug = 'bans';
 
@@ -29,12 +32,12 @@ class BanhammerResource extends Resource
         return config('filament-banhammer.navigation_group');
     }
 
-    protected static ?string $navigationIcon = 'heroicon-o-no-symbol';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-no-symbol';
 
-    public static function form(Form $form): Form
+    public static function form(Schema $schema): Schema
     {
-        return $form
-            ->schema([]);
+        return $schema
+            ->components([]);
     }
 
     public static function table(Table $table): Table
@@ -50,7 +53,7 @@ class BanhammerResource extends Resource
                     ->label('Name')
                     ->searchable()
                     ->formatStateUsing(function ($record) {
-                        return $record->bannable->getFilamentBanhammerTitleAttribute() ?? '-';
+                        return $record->bannable?->getFilamentBanhammerTitleAttribute() ?? '-';
                     }),
                 TextColumn::make('ip')
                     ->searchable()
@@ -59,7 +62,7 @@ class BanhammerResource extends Resource
                     ->label('Banned by')
                     ->searchable()
                     ->formatStateUsing(function ($record) {
-                        return $record->createdBy->name ?? '-';
+                        return $record->createdBy?->name ?? '-';
                     }),
                 TextColumn::make('comment')
                     ->searchable()
@@ -77,7 +80,7 @@ class BanhammerResource extends Resource
             ])
             ->filters([
                 Filter::make('expired_at')
-                    ->form([
+                    ->schema([
                         DatePicker::make('unbanned_at'),
                     ])
                     ->query(function (Builder $query, array $data) {
@@ -86,7 +89,7 @@ class BanhammerResource extends Resource
                                 fn (Builder $query, $date): Builder => $query->whereDate('expired_at', '=', $date));
                     }),
                 Filter::make('created_at')
-                    ->form([
+                    ->schema([
                         DatePicker::make('banned_at'),
                     ])
                     ->query(function (Builder $query, array $data) {
@@ -95,15 +98,16 @@ class BanhammerResource extends Resource
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '=', $date));
                     }),
             ])
-            ->actions([
+            ->recordActions([
                 ActionGroup::make([
                     EditBanAction::make(),
                     UnbanAction::make(),
                 ])->tooltip('Actions'),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     ExportBulkAction::make()
+                        ->exporter(config('filament-banhammer.exporter'))
                         ->visible(config('filament-banhammer.show_export')),
                     EditBanBulkAction::make(),
                     UnbanBulkAction::make(),

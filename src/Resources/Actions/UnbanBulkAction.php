@@ -2,8 +2,8 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources\Actions;
 
+use Filament\Actions\BulkAction;
 use Filament\Actions\Concerns\CanCustomizeProcess;
-use Filament\Tables\Actions\BulkAction;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,7 +33,9 @@ class UnbanBulkAction extends BulkAction
         $this->requiresConfirmation(config('filament-banhammer.actions.unban_bulk.require_confirmation'));
 
         $this->action(function (): void {
-            $this->process(static fn (Collection $records) => $records->each(fn (Model $record) => $record->bannable->unban()));
+            $this->process(static fn (Collection $records) => $records->each(
+                fn (Model $record) => UnbanAction::resolveBannable($record)?->unban()
+            ));
 
             if (! config('filament-banhammer.actions.unban_bulk.notifications.show')) {
                 return;

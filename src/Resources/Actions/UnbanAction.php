@@ -2,8 +2,8 @@
 
 namespace Gerenuk\FilamentBanhammer\Resources\Actions;
 
+use Filament\Actions\Action;
 use Filament\Actions\Concerns\CanCustomizeProcess;
-use Filament\Tables\Actions\Action;
 use Illuminate\Database\Eloquent\Model;
 
 class UnbanAction extends Action
@@ -32,7 +32,17 @@ class UnbanAction extends Action
         $this->requiresConfirmation(config('filament-banhammer.actions.unban.require_confirmation'));
 
         $this->action(function (): void {
-            $result = $this->process(static fn (Model $record) => $record->bannable->unban());
+            $result = $this->process(static function (Model $record): bool {
+                $bannable = static::resolveBannable($record);
+
+                if (! $bannable) {
+                    return false;
+                }
+
+                $bannable->unban();
+
+                return true;
+            });
 
             if (! config('filament-banhammer.actions.unban.notifications.show')) {
                 return;
@@ -42,13 +52,26 @@ class UnbanAction extends Action
 
             $this->successNotificationTitle(config('filament-banhammer.actions.unban.notifications.success.title'));
 
-            //            if (! $result) {
-            //                $this->failure();
-            //
-            //                return;
-            //            }
+            if (! $result) {
+                $this->failure();
+
+                return;
+            }
 
             $this->success();
         });
+    }
+
+    /**
+     * Resolve the bannable model to unban, whether this action is mounted on a
+     * bannable model directly, or on a ban record (e.g. the bundled Banhammer resource).
+     */
+    public static function resolveBannable(Model $record): ?Model
+    {
+        if (method_exists($record, 'unban')) {
+            return $record;
+        }
+
+        return $record->bannable ?? null;
     }
 }
